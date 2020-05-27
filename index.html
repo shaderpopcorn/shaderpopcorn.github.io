@@ -19,17 +19,26 @@
     </script>
     <script id="fragmentShader" type="x-shader/x-fragment">
 
-
 				uniform float time;
 				uniform vec2 resolution;
 				uniform vec2 mouse;
 
-
 				void main(void){
-						vec2 p = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
-						vec3 col = vec3(0);
-						col.rg = p;
-						gl_FragColor = vec4(col,1.);
+					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
+					vec3 col = vec3(0.);
+
+					uv *= 10.;
+					vec2 gv = fract(uv)-.5;
+					vec2 id = floor(uv);
+					float dist = (uv.x+uv.y)/4.;
+
+					float d = length(gv);
+					float r = mix(.25,.4, sin(dist-time));
+					float m = smoothstep(r,r*.9,d);
+
+					col = vec3(m);
+
+					gl_FragColor = vec4(col,1.);
 				}
     </script>
     <script>
