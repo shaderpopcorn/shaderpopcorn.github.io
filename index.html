@@ -25,7 +25,7 @@
         void main() {
             vec2 p = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 						vec3 c = vec3(0.);
-						float d = length(p)-m;
+						float d = sin(length(p));
 						float m = smoothstep(.5,.4,d);
 						c += vec3(m);
 						gl_FragColor=vec4(c,1.0);
