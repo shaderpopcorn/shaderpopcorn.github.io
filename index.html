@@ -22,10 +22,13 @@
 				uniform vec2 mouse;
         uniform float time;
 
-				vec2 m = mouse/resolution.y;
         void main() {
-            vec2 p = gl_FragCoord.xy/resolution.xy;
-            gl_FragColor=vec4(m.x,m.y,0.0,1.0);
+            vec2 p = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
+						vec3 c = vec3(0.);
+						float d = length(p);
+						float m = smoothstep(.5,.2,d);
+						c += vec3(m);
+						gl_FragColor=vec4(c,1.0);
         }
     </script>
     <script>
