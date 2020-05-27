@@ -18,12 +18,13 @@
         }
     </script>
     <script id="fragmentShader" type="x-shader/x-fragment">
-        uniform vec2 u_resolution;
-        uniform float u_time;
+        uniform vec2 resolution;
+				uniform vec2 mouse;
+        uniform float time;
 
         void main() {
-            vec2 st = gl_FragCoord.xy/u_resolution.xy;
-            gl_FragColor=vec4(st.x,st.y,0.0,1.0);
+            vec2 p = gl_FragCoord.xy/u_resolution.xy;
+            gl_FragColor=vec4(p.x,p.y,0.0,1.0);
         }
     </script>
     <script>
@@ -45,9 +46,9 @@
             var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
             uniforms = {
-                u_time: { type: "f", value: 1.0 },
-                u_resolution: { type: "v2", value: new THREE.Vector2() },
-                u_mouse: { type: "v2", value: new THREE.Vector2() }
+                time: { type: "f", value: 1.0 },
+                resolution: { type: "v2", value: new THREE.Vector2() },
+                mouse: { type: "v2", value: new THREE.Vector2() }
             };
 
             var material = new THREE.ShaderMaterial( {
@@ -75,8 +76,8 @@
 
         function onWindowResize( event ) {
             renderer.setSize( window.innerWidth, window.innerHeight );
-            uniforms.u_resolution.value.x = renderer.domElement.width;
-            uniforms.u_resolution.value.y = renderer.domElement.height;
+            uniforms.resolution.value.x = renderer.domElement.width;
+            uniforms.resolution.value.y = renderer.domElement.height;
         }
 
         function animate() {
