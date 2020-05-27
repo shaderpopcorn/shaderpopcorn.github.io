@@ -69,8 +69,8 @@
             window.addEventListener( 'resize', onWindowResize, false );
 
             document.onmousemove = function(e){
-              uniforms.u_mouse.value.x = e.pageX
-              uniforms.u_mouse.value.y = e.pageY
+              uniforms.mouse.value.x = e.pageX
+              uniforms.mouse.value.y = e.pageY
             }
         }
 
@@ -86,7 +86,7 @@
         }
 
         function render() {
-            uniforms.u_time.value += 0.05;
+            uniforms.time.value += 0.05;
             renderer.render( scene, camera );
         }
     </script>
