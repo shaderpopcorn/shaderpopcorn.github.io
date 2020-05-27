@@ -4,7 +4,7 @@
 		<title>shaderpopcorn</title>
 		<meta charset="utf-8">
   		<meta name="description" content="color">
-  		<meta name="author" content="Kay Wengierek">
+  		<meta name="author" content="KW">
   		<meta name="viewport" content="width=device-width, initial-scale=1.0">
   		<link rel="stylesheet" href="css/style.css">
 	</head>
@@ -23,8 +23,8 @@
         uniform float time;
 
         void main() {
-            vec2 p = gl_FragCoord.xy/u_resolution.xy;
-            gl_FragColor=vec4(p.x,p.y,0.0,1.0);
+            vec2 p = gl_FragCoord.xy/resolution.xy;
+            gl_FragColor=vec4(mouse.x,mouse.y,0.0,1.0);
         }
     </script>
     <script>
