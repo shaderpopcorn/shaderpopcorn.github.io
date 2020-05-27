@@ -18,9 +18,7 @@
         }
     </script>
     <script id="fragmentShader" type="x-shader/x-fragment">
-				#version 150
-				#define S(a,b,t) smoothstep(a,b,t)
-				#define PI 3.1415
+
 
 				uniform float time;
 				uniform vec2 resolution;
@@ -33,6 +31,7 @@
 				uniform sampler2D texture3;
 				uniform sampler2D prevFrame;
 				uniform sampler2D prevPass;
+				float PI = 3.1415;
 
 				float DistLine(vec2 p, vec2 a, vec2 b){         // draws a line segment not an infinite line
 				vec2 pa = p-a;
@@ -59,7 +58,7 @@
 
 				float Line(vec2 p, vec2 a, vec2 b){
 				float d = DistLine(p,a,b);
-				float m = S(.02,.005,d);
+				float m = smoothstep(.02,.005,d);
 				float d2 = length(a-b);
 				m *= S(1.2,.8,d2)*.5+S(.05,.03,abs(d2-.75));    // it fades the lines depending on the length of the line segment
 																												// makes the lines flash when they are above a certain threshold
@@ -104,9 +103,6 @@
 				vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 				vec3 col = vec3(0);
 
-				vec2 M = mouse;
-				M.x = 1.-M.x;
-
 				float gradient = uv.y;                  // define uv.y so I can use it after the rotation as an unrotated variable
 				float m = 0.;
 				float t = time*.1;
@@ -115,13 +111,12 @@
 				float c = cos(t);
 				mat2 rot = mat2(c,-s,s,c);
 				uv *= rot;
-				M *= rot;
 
 				for(float i=0.; i<1.; i+=1./4.){
 						float z = fract(i+t);               // multiple layers that move forward (once they get to one the snap back to 0)
 						float size = mix(10.,.5,z);         // 10. --> larger repititions means smaller look
-						float fade = S(0.,.5,z)*S(1.,.7,z); // first smoothstep teh layers fade in over the first 50% / second smoothstep is for the fade out (faster)
-						m += Layer(uv*size+i*20.+M)*fade;   // i*20. --> shifts the layers, so we look at a different part of each layer
+						float fade = smoothstep(0.,.5,z)*smoothstep(1.,.7,z); // first smoothstep teh layers fade in over the first 50% / second smoothstep is for the fade out (faster)
+						m += Layer(uv*size+i*20.)*fade;   // i*20. --> shifts the layers, so we look at a different part of each layer
 
 				}
 
