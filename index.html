@@ -23,9 +23,6 @@
 				uniform vec2 resolution;
 				float PI = 3.1415;
 
-				in VertexData{vec4 v_position;vec3 v_normal;vec2 v_texcoord;} inData;
-				out vec4 fragColor;
-
 				vec2 Rotate2D(vec2 uv, float an){
 					float s = sin(an), c = cos(an);
 					uv *= mat2(c,-s,s,c);
