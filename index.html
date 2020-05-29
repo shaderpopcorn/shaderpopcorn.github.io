@@ -22,7 +22,7 @@
 				uniform float time;
 				uniform vec2 resolution;
 				float PI = 3.1415;
-				uniform sampler2D texture0;
+				uniform sampler2D texture;
 
 				vec2 Rotate2D(vec2 uv, float an){
 					float s = sin(an), c = cos(an);
@@ -54,7 +54,7 @@
 					col = vec3(m);
 
 					//gl_FragColor = vec4(col,0);
-					gl_FragColor = texture2D(texture0, uv);
+					gl_FragColor = texture2D(texture, uv);
 				}
     </script>
     <script>
@@ -73,12 +73,8 @@
 
             scene = new THREE.Scene();
 
-						const loader = new THREE.TextureLoader();
-						const texture = loader.load('images/textureMap.png');
-						texture.minFilter = THREE.NearestFilter;
-						texture.magFilter = THREE.NearestFilter;
-						texture.wrapS = THREE.RepeatWrapping;
-						texture.wrapT = THREE.RepeatWrapping;
+						var texLoader = new THREE.TextureLoader();
+    				var texSampler = texLoader.load("images/textureMap.png");
 
 						var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
@@ -86,7 +82,7 @@
                 time: { type: "f", value: 1.0 },
                 resolution: { type: "v2", value: new THREE.Vector2() },
                 mouse: { type: "v2", value: new THREE.Vector2() },
-								texture0: { type "t", value: texture }
+								texture: {type: 't', value: texSampler},
 						};
 
             var material = new THREE.ShaderMaterial( {
