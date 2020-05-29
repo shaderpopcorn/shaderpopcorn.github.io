@@ -48,7 +48,7 @@
 					gv *= mat2(cos(an),-sin(an),sin(an),cos(an));
 
 					float x = length(gv)*2.;
-					float m = smoothstep(.01,.0,sin(x-time));
+					float m = smoothstep(.01,.0,sin(x-time/5.));
 
 					col = vec3(m);
 
