@@ -22,6 +22,7 @@
 				uniform float time;
 				uniform vec2 resolution;
 				float PI = 3.1415;
+				uniform sampler2D texture0;
 
 				vec2 Rotate2D(vec2 uv, float an){
 					float s = sin(an), c = cos(an);
@@ -52,7 +53,8 @@
 
 					col = vec3(m);
 
-					gl_FragColor = vec4(col,0);
+					//gl_FragColor = vec4(col,0);
+					gl_FragColor = texture2D(texture0, uv);
 				}
     </script>
     <script>
@@ -71,24 +73,35 @@
 
             scene = new THREE.Scene();
 
-            var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+						const loader = new THREE.TextureLoader();
+						const texture = loader.load('images/textureMap.png');
+						texture.minFilter = THREE.NearestFilter;
+						texture.magFilter = THREE.NearestFilter;
+						texture.wrapS = THREE.RepeatWrapping;
+						texture.wrapT = THREE.RepeatWrapping;
 
-            uniforms = {
+						var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+
+						uniforms = {
                 time: { type: "f", value: 1.0 },
                 resolution: { type: "v2", value: new THREE.Vector2() },
-                mouse: { type: "v2", value: new THREE.Vector2() }
-            };
+                mouse: { type: "v2", value: new THREE.Vector2() },
+								texture0: { type "t", value: texture }
+						};
 
             var material = new THREE.ShaderMaterial( {
                 uniforms: uniforms,
                 vertexShader: document.getElementById( 'vertexShader' ).textContent,
                 fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-            } );
+						});
 
             var mesh = new THREE.Mesh( geometry, material );
             scene.add( mesh );
 
-            renderer = new THREE.WebGLRenderer();
+            renderer = new THREE.WebGLRenderer({
+    						antialias: true,
+    						alpha: true
+  					});
             renderer.setPixelRatio( window.devicePixelRatio );
 
             container.appendChild( renderer.domElement );
