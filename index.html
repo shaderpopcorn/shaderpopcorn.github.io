@@ -94,10 +94,7 @@
             var mesh = new THREE.Mesh( geometry, material );
             scene.add( mesh );
 
-            renderer = new THREE.WebGLRenderer({
-    						antialias: true,
-    						alpha: true
-  					});
+            renderer = new THREE.WebGLRenderer();
             renderer.setPixelRatio( window.devicePixelRatio );
 
             container.appendChild( renderer.domElement );
