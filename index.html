@@ -38,7 +38,7 @@
 				{
 					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 					vec3 col = vec3(0);
-					vec4 tex = texture2D(texture, uv*10+vec2(.5,.5));
+					vec4 tex = texture2D(texture, uv);
 
 					uv = Rotate2D(uv,PI/2.);
 				 	uv = Scale2D(uv, vec2(1.,.5));
@@ -52,10 +52,10 @@
 					float x = length(gv)*2.;
 					float m = smoothstep(.01,.0,sin(x-time/5.));
 
-					col = vec3(m);
+					col = vec3(m)+tex.rgb;
 
-					//gl_FragColor = vec4(col,0);
-					gl_FragColor = tex;
+					gl_FragColor = vec4(col,0);
+					// gl_FragColor = tex;
 				}
     </script>
     <script>
