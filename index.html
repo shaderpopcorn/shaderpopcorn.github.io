@@ -94,6 +94,7 @@
             var mesh = new THREE.Mesh( geometry, material );
             scene.add( mesh );
 						mesh.rotation.y += 0.2;
+						mesh.rotation.x += 0.2;
 
             renderer = new THREE.WebGLRenderer({
     						antialias: true,
@@ -120,7 +121,6 @@
 
         function animate() {
             requestAnimationFrame( animate );
-						mesh.rotation.x += 0.2;
             render();
         }
 
