@@ -39,10 +39,10 @@
 					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 					vec3 col = vec3(0);
 
-					uv = Rotate2D(uv,PI/2.);
-					uv = Scale2D(uv, vec2(1.,.5));
+					// uv = Rotate2D(uv,PI/2.);
+					// uv = Scale2D(uv, vec2(1.,.5));
 
-					uv *= 10.;
+					// uv *= 10.;
 					vec2 gv = fract(uv);
 
 					float an = PI/4.;
