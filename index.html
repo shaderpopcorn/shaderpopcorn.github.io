@@ -51,7 +51,7 @@
 					float x = length(gv)*2.;
 					float m = smoothstep(.01,.0,sin(x-time/5.));
 
-					col = mix(tex.rgb,vec3(m),tex.a);
+					col = mix(vec3(m),tex.rgb,tex.a);
 
 				 	gl_FragColor = vec4(col,0.);
 				 	// gl_FragColor = tex;
