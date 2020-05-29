@@ -69,14 +69,14 @@
             container = document.getElementById( 'container' );
 
             camera = new THREE.Camera();
-            camera.position.z = 1;
+            camera.position.z = 2;
 
             scene = new THREE.Scene();
 
 						var texLoader = new THREE.TextureLoader();
     				var texSampler = texLoader.load("images/LOGO_S.png");
 
-						var geometry = new THREE.PlaneBufferGeometry( 50, 50 );
+						var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
 						uniforms = {
                 time: { type: "f", value: 1.0 },
