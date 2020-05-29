@@ -76,7 +76,7 @@
 						var texLoader = new THREE.TextureLoader();
     				var texSampler = texLoader.load("images/LOGO_S.png");
 
-						var geometry = new THREE.PlaneBufferGeometry( 3, 2 );
+						var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
 						uniforms = {
                 time: { type: "f", value: 1.0 },
@@ -93,6 +93,7 @@
 
             var mesh = new THREE.Mesh( geometry, material );
             scene.add( mesh );
+						mesh.rotation.y += 0.2;
 
             renderer = new THREE.WebGLRenderer({
     						antialias: true,
