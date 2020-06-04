@@ -22,6 +22,7 @@
 				uniform float time;
 				uniform vec2 resolution;
 				uniform sampler2D texture;
+				uniform float click;
 				float PI = 3.1415;
 
 				vec2 Rotate2D(vec2 uv, float an){
@@ -38,8 +39,10 @@
 					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 					vec3 col = vec3(0);
 					vec2 tv = uv;
-					tv += vec2(.0,-.4);
-					tv *= 10.;
+					if (click = 1.){
+						tv += vec2(.0,-.4);
+						tv *= 10.;
+					}
 					vec4 tex = texture2D(texture, tv);
 
 					uv = Rotate2D(uv,PI/2.);
@@ -77,7 +80,7 @@
             scene = new THREE.Scene();
 
 						var texLoader = new THREE.TextureLoader();
-    				var texSampler = texLoader.load("images/LOGO_S_ALPHA.png");
+    				var texSampler = texLoader.load("images/LOGO_ALPHA.png");
 
 						var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
@@ -85,7 +88,8 @@
                 time: { type: "f", value: 1.0 },
                 resolution: { type: "v2", value: new THREE.Vector2() },
                 mouse: { type: "v2", value: new THREE.Vector2() },
-								texture: { type: 't', value: texSampler }
+								texture: { type: "t", value: texSampler },
+								click: { type: "f", value: 0.0 }
 						};
 
             var material = new THREE.ShaderMaterial( {
@@ -104,6 +108,10 @@
 
             onWindowResize();
             window.addEventListener( 'resize', onWindowResize, false );
+
+						document.onmousedown = function(e){
+							uniforms.click.value = 1.0;
+						}
 
             document.onmousemove = function(e){
               uniforms.mouse.value.x = e.pageX
