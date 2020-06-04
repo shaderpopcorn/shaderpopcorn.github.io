@@ -44,7 +44,7 @@
     			ut = ut-vec2(1.5,2.);
     			ut.y = 1.-ut.y;
 
-    			vec2 mnc = 5.*(mouse-.25*resolution.xy)/resolution.y;
+    			vec2 mnc = 5.*(mouse-.05*resolution.xy)/resolution.y;
     			// vec2 mnp = mouse/resolution.y*5.;
 
     			vec2 utt = ut-vec2(mnc.x, clamp(-mnc.y,.0,-.0));
