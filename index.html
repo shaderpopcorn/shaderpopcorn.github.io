@@ -42,7 +42,7 @@
 					vec2 mouseN = vec2(1.-mouse.x/resolution.x, mouse.y/resolution.y);
 					vec2 tv = uv;
 					tv *= 10.;
-					tv += vec2(mouseN.x*10.-.5,mouseN.y*10.-.5);
+					tv += vec2(mouseN.x-.5*10.,mouseN.y-.5*10.);
 					vec4 tex = texture2D(texture, tv);
 
 					uv = Rotate2D(uv,PI/2.);
