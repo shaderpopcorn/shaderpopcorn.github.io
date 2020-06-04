@@ -39,9 +39,9 @@
 				void main(void){
 					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 					vec3 col = vec3(0);
-					mouse = vec2(mouse.x/resolution.x, 1.-mouse.y/resolution.y);
+					vec2 mouseN = vec2(mouse.x/resolution.x, 1.-mouse.y/resolution.y);
 					vec2 tv = uv;
-					tv += vec2(mouse.x,mouse.y);
+					tv += vec2(mouseN.x,mouseN.y);
 					tv *= 10.;
 					vec4 tex = texture2D(texture, tv);
 
