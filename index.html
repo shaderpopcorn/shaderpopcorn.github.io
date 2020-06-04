@@ -52,8 +52,8 @@
                     vec4 tex = texture2D(texture,utt+vec2(.5,.5));
 
                     //utt = utt-vec2(.55,.44);
-                    float si = sin(length(utt)*5.-time*2.);
-                    float co = cos(length(utt)*5.-time*2.);
+                    float si = sin(length(utt)*5.-time);
+                    float co = cos(length(utt)*5.-time);
                     tex *= smoothstep(4.,1.,(si+co+si-co))*.5+.5*tex;
 
 					uv = Rotate2D(uv,PI/2.);
