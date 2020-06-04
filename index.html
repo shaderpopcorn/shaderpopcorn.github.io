@@ -20,6 +20,7 @@
     <script id="fragmentShader" type="x-shader/x-fragment">
 
 				uniform float time;
+				uniform vec2 mouse;
 				uniform vec2 resolution;
 				uniform sampler2D texture;
 				uniform float click;
@@ -39,10 +40,8 @@
 					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 					vec3 col = vec3(0);
 					vec2 tv = uv;
-					if (click == 1.){
-						tv += vec2(.0,-.4);
-						tv *= 10.;
-					}
+					tv += vec2(mouse.x,mouse.y);
+					tv *= 10.;
 					vec4 tex = texture2D(texture, tv);
 
 					uv = Rotate2D(uv,PI/2.);
