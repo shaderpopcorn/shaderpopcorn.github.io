@@ -48,8 +48,13 @@
     			     // vec2 mnp = mouse/resolution.y*5.;
 
                     vec2 utt = ut-vec2(mnc.x, clamp(-mnc.y,.0,-.0));
-                    utt *= mat2(4.,0.,0.,4.);
+                    utt *= mat2(5.,0.,0.,5.);
                     vec4 tex = texture2D(texture,utt+vec2(.5,.5));
+
+                    //utt = utt-vec2(.55,.44);
+                    float si = sin(length(utt)*5.-time*2.);
+                    float co = cos(length(utt)*5.-time*2.);
+                    tex *= smoothstep(4.,1.,(si+co+si-co))*.5+.5*tex;
 
 					uv = Rotate2D(uv,PI/2.);
 				 	uv = Scale2D(uv, vec2(1.,.5));
