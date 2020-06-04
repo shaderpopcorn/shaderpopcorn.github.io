@@ -37,18 +37,19 @@
 					return uv; }
 
 				void main(void){
-					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
+				    vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 					vec3 col = vec3(0);
 
-					vec2 ut = 5.*gl_FragCoord.xy/resolution.y;
-    			ut = ut-vec2(1.5,2.);
-    			ut.y = 1.-ut.y;
+				    vec2 ut = uv;
 
-    			vec2 mnc = 5.*(mouse-.5*resolution.xy)/resolution.y;
-    			// vec2 mnp = mouse/resolution.y*5.;
+    			     //ut.y = 1.-ut.y;
 
-    			vec2 utt = ut-vec2(mnc.x-.5, clamp(-mnc.y,.0,-.0));
-    			vec4 tex = texture2D(texture,utt);
+                    vec2 mnc = 2.*(mouse.xy-.25*resolution.xy)/resolution.y;
+    			     // vec2 mnp = mouse/resolution.y*5.;
+
+                    vec2 utt = ut-vec2(mnc.x, clamp(-mnc.y,.0,-.0));
+                    utt *= mat2(4.,0.,0.,4.);
+                    vec4 tex = texture2D(texture,utt+vec2(.5,.5));
 
 					uv = Rotate2D(uv,PI/2.);
 				 	uv = Scale2D(uv, vec2(1.,.5));
@@ -85,7 +86,7 @@
             scene = new THREE.Scene();
 
 						var texLoader = new THREE.TextureLoader();
-    				var texSampler = texLoader.load("images/LOGO_S_ALPHA.png");
+    				var texSampler = texLoader.load("images/LOGO_ALPHA.png");
 
 						var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
 
