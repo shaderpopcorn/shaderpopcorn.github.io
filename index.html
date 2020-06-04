@@ -39,11 +39,16 @@
 				void main(void){
 					vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
 					vec3 col = vec3(0);
-					vec2 mouseN = vec2(1.-mouse.x/resolution.x, mouse.y/resolution.y);
-					vec2 tv = uv;
-					tv *= 10.;
-					tv += vec2(mouseN.x-5.*10.,mouseN.y-5.*10.);
-					vec4 tex = texture2D(texture, tv);
+
+					vec2 ut = 5.*gl_FragCoord.xy/resolution.y;
+    			ut = ut-vec2(1.5,2.);
+    			ut.y = 1.-ut.y;
+
+    			vec2 mnc = 5.*(mouse-.5*resolution.xy)/resolution.y;
+    			// vec2 mnp = mouse/resolution.y*5.;
+
+    			vec2 utt = ut-vec2(mnc.x, clamp(-mnc.y,.0,-.0));
+    			vec4 tex = texture2D(texture,utt);
 
 					uv = Rotate2D(uv,PI/2.);
 				 	uv = Scale2D(uv, vec2(1.,.5));
