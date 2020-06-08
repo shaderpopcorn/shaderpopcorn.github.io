@@ -178,8 +178,8 @@
             }
 
             document.ontouchmove = function(e){
-              uniforms.mouse.value.x = (e.page.X / innerWidth)*2-1
-              uniforms.mouse.value.y = (e.page.Y / innerHeight)*2+1
+              uniforms.mouse.value.x = e.page.X
+              uniforms.mouse.value.y = e.page.Y
             }
         }
 
