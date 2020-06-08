@@ -172,6 +172,8 @@
             document.ontouchstart = function(e){
                 e.preventDefault();
                 uniforms.touch.value = 1.0;
+                uniforms.mouse.value.x = e.pageX*2;
+                uniforms.mouse.value.y = e.pageY*2;
             }
 
             document.ontouchend = function(e){
@@ -181,8 +183,8 @@
 
             document.ontouchmove = function(e){
                 e.preventDefault();
-                uniforms.mouse.value.x = e.pageX*2
-                uniforms.mouse.value.y = e.pageY*2
+                uniforms.mouse.value.x = e.pageX*2;
+                uniforms.mouse.value.y = e.pageY*2;
             }
         }
 
