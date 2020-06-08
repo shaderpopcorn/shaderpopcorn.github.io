@@ -170,16 +170,16 @@
             }
 
             document.ontouchstart = function(e){
-                uniforms.touch.value = 1.0;
+                document.touch.value = 1.0;
             }
 
             document.ontouchend = function(e){
-                uniforms.touch.value = 0.0;
+                document.touch.value = 0.0;
             }
 
             document.ontouchmove = function(e){
-              uniforms.mouse.value.x = (e.page.X / window.innerWidth) * 2 - 1
-              uniforms.mouse.value.y = (e.page.Y / window.innerHeight) * 2 + 1
+              uniforms.mouse.value.x = (event.changedTouches[0].pageX / window.innerWidth) * 2 - 1;
+              uniforms.mouse.value.y = -(event.changedTouches[0].pageY / window.innerHeight) * 2 + 1;
             }
         }
 
