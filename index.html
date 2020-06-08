@@ -26,6 +26,7 @@
         uniform sampler2D msdfH;
         uniform sampler2D msdfE;
         uniform float click;
+        uniform float touch;
 
         float PI = 3.1415;
 
@@ -41,7 +42,7 @@
 
             vec2 mnc;
             vec2 mnp;
-            if(click == 1.){
+            if(click == 1. || touch == 1.){
                 mnc = (mouse.xy-.5*resolution.xy)/resolution.y;
                 mnp = (mouse.xy-.0*resolution.xy)/resolution.y;
             } else {
@@ -134,7 +135,8 @@
 				            logo: { type: "t", value: texSampler },
                             msdfH: { type: "t", value: texSampler1 },
                             msdfE: { type: "t", value: texSampler2 },
-				            click: { type: "f", value: 0.0 }
+				            click: { type: "f", value: 0.0 },
+                            touch: { type: "f", value: 0.0 },
 						};
 
             var material = new THREE.ShaderMaterial( {
@@ -165,6 +167,14 @@
             document.onmousemove = function(e){
               uniforms.mouse.value.x = e.pageX
               uniforms.mouse.value.y = e.pageY
+            }
+
+            document.ontouchstart = function(e){
+                uniforms.touch.value = 1.0;
+            }
+
+            document.ontouchend = function(e){
+                uniforms.touch.value = 0.0;
             }
 
             document.ontouchmove = function(e){
