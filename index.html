@@ -175,6 +175,8 @@
 
             document.ontouchend = function(e){
                 uniforms.touch.value = 0.0;
+                uniforms.mouse.value.x = 0.0;
+                uniforms.mouse.value.y = 0.0;
             }
 
             document.ontouchmove = function(e){
