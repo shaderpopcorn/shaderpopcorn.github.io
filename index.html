@@ -84,7 +84,7 @@
             float dist = length(uv)/4.;
 
             float d = length(gv);
-            float r = mix(.01,mnp.x, sin(dist-time/7.)*.5+.5);
+            float r = mix(.01,mnp.x, sin(dist-time/5.)*.5+.5);
             float m = smoothstep(r,r*.9,d);
 
             vec4 ccm = vec4(m);
