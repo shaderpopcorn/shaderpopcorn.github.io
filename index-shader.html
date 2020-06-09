@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>shaderpopcorn</title>
+		<meta charset="utf-8">
+  		<meta name="description" content="color">
+  		<meta name="author" content="KW">
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+    <div id="container"></div>
+    <script src="lib/three.js"></script>
+    <script src="lib/gl-matrix.js"></script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        void main() {
+            gl_Position = vec4( position, 1.0 );
+        }
+    </script>
+    <script id="fragmentShader" type="x-shader/x-fragment">
+
+        uniform float time;
+        uniform vec2 resolution;
+        uniform vec2 mouse;
+        uniform sampler2D logo;
+        uniform sampler2D msdfH;
+        uniform sampler2D msdfE;
+        uniform float click;
+        uniform float touch;
+
+        float PI = 3.1415;
+
+        vec2 Rotate2D(vec2 uv, float an){ float s = sin(an), c = cos(an); uv *= mat2(c,-s,s,c); return uv; }
+
+        vec2 Scale2D(vec2 uv, vec2 zo){ float x = zo.x, y = zo.y; uv *= mat2(-x,y,x,y); return uv; }
+
+        void main(void){
+            vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
+            vec4 col = vec4(0.);
+
+            vec2 ut = uv;
+
+            vec2 mnc;
+            vec2 mnp;
+            if(click == 1. || touch == 1.){
+                mnc = (mouse.xy-.5*resolution.xy)/resolution.y;
+                mnp = (mouse.xy-.0*resolution.xy)/resolution.y;
+            } else {
+                mnc = smoothstep(fract(time),fract(time)+.2,vec2(.0,.0));
+                mnp = vec2(.5,.5);
+            }
+
+            vec2 utL = ut-vec2(mnc.x, clamp(-mnc.y, .0, -.0));
+            utL *= mat2(10.,0., 0., 10.);
+            vec4 texL = texture2D(logo,utL+vec2(.5, .5));
+
+            float si = sin(length(utL)*5.-time);
+            float co = cos(length(utL)*5.-time);
+            texL *= smoothstep(4., 1., (si+co+si-co))*.5+.5*texL;
+
+            vec2 utH = ut*vec2(1.,4.);
+            utH *= mat2(4.,0.,0.,4.);
+            vec4 texH = texture2D(msdfH,utH+vec2(.5,-7.));
+
+            vec2 utE = ut*vec2(1.,8.);
+            utE *= mat2(4.,0.,0.,4.);
+            vec4 texE = texture2D(msdfE,utE+vec2(.5,15.55));
+
+            ut.y = abs(ut.y);
+            ut -= vec2(.0,.475);
+            float dcy = abs(ut.y);
+            float mcy = smoothstep(.04,.039,dcy);
+            vec4 ccy = vec4(mcy);
+            ccy *= vec4(.1,.1,.1,mcy*.9);
+
+            uv = Rotate2D(uv, PI/.8);
+            //uv = Scale2D(uv, vec2(1.,.5));
+
+            //-------------------------------------------------------------
+
+            uv *= 10.;
+            vec2 gv = fract(uv)-.5;
+            vec2 id = floor(uv);
+            float dist = length(uv)/4.;
+
+            float d = length(gv);
+            float r = mix(.01,mnp.x, sin(dist-time/5.)*.5+.5);
+            float m = smoothstep(r,r*.9,d);
+
+            vec4 ccm = vec4(m);
+
+            //-------------------------------------------------------------
+
+            col = mix(ccm,ccy,ccy.a);
+
+            vec4 col1 = mix(col,texL,texL.a);
+            vec4 col2 = mix(col1,texH,texH.a);
+            vec4 col3 = mix(col2,texE,texE.a);
+
+            gl_FragColor = col3;
+        }
+    </script>
+    <script>
+        var container;
+        var camera, scene, renderer;
+        var uniforms;
+
+        init();
+        animate();
+
+        function init() {
+            container = document.getElementById( 'container' );
+
+            camera = new THREE.Camera();
+            camera.position.z = 1;
+
+            scene = new THREE.Scene();
+
+						var texLoader = new THREE.TextureLoader();
+    				    var texSampler = texLoader.load("images/LOGO_ALPHA.png");
+                        var texLoader1 = new THREE.TextureLoader();
+                        var texSampler1 = texLoader1.load("images/SHADERPOPCORN_1024_ALPHA.png");
+                        var texLoader2 = new THREE.TextureLoader();
+                        var texSampler2 = texLoader2.load("images/kay_1024_ALPHA.png");
+
+						var geometry = new THREE.PlaneBufferGeometry( 2, 2 );
+
+						uniforms = {
+                            time: { type: "f", value: 1.0 },
+                            resolution: { type: "v2", value: new THREE.Vector2() },
+                            mouse: { type: "v2", value: new THREE.Vector2() },
+				            logo: { type: "t", value: texSampler },
+                            msdfH: { type: "t", value: texSampler1 },
+                            msdfE: { type: "t", value: texSampler2 },
+				            click: { type: "f", value: 0.0 },
+                            touch: { type: "f", value: 0.0 },
+						};
+
+            var material = new THREE.ShaderMaterial( {
+                uniforms: uniforms,
+                vertexShader: document.getElementById( 'vertexShader' ).textContent,
+                fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+            });
+
+            var mesh = new THREE.Mesh( geometry, material );
+            scene.add( mesh );
+
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio( window.devicePixelRatio );
+
+            container.appendChild( renderer.domElement );
+
+            onWindowResize();
+            window.addEventListener( 'resize', onWindowResize, false );
+
+            document.onmousedown = function(e){
+                uniforms.click.value = 1.0;
+            }
+
+            document.onmouseup = function(e){
+                uniforms.click.value = 0.0;
+            }
+
+            document.onmousemove = function(e){
+              uniforms.mouse.value.x = e.pageX*2;
+              uniforms.mouse.value.y = e.pageY*2;
+            }
+
+            document.ontouchstart = function(e){
+                e.preventDefault();
+                uniforms.touch.value = 1.0;
+                uniforms.mouse.value.x = e.pageX*2;
+                uniforms.mouse.value.y = e.pageY*2;
+            }
+
+            document.ontouchend = function(e){
+                e.preventDefault();
+                uniforms.touch.value = 0.0;
+            }
+
+            document.ontouchmove = function(e){
+                e.preventDefault();
+                uniforms.mouse.value.x = e.pageX*2;
+                uniforms.mouse.value.y = e.pageY*2;
+            }
+        }
+
+        function onWindowResize( event ) {
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            uniforms.resolution.value.x = renderer.domElement.width;
+            uniforms.resolution.value.y = renderer.domElement.height;
+        }
+
+        function animate() {
+            requestAnimationFrame( animate );
+            render();
+        }
+
+        function render() {
+            uniforms.time.value += 0.05;
+            renderer.render( scene, camera );
+        }
+    </script>
+	</body>
+</html>
