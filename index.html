@@ -11,7 +11,7 @@
 	<body>
     <div id="container"></div>
     <script src="js/three.js"></script>
-    <script src="js/OrbitControls.js"></script>
+    <script src="js/gl-matrix.js"></script>
     <script id="vertexShader" type="x-shader/x-vertex">
         void main() {
             gl_Position = vec4( position, 1.0 );
@@ -162,8 +162,8 @@
             }
 
             document.onmousemove = function(e){
-              uniforms.mouse.value.x = e.pageX
-              uniforms.mouse.value.y = e.pageY
+              uniforms.mouse.value.x = e.pageX*2;
+              uniforms.mouse.value.y = e.pageY*2;
             }
 
             document.ontouchstart = function(e){
