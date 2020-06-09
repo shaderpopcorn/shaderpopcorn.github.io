@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>shaderpopcorn</title>
+    <meta charset="utf-8">
+    <meta name="description" content="color">
+    <meta name="author" content="KW">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="lib/three.js"></script>
+    <script src="lib/gl-matrix.js"></script>
+    <script>
+        var container;
+        var renderer, uniforms, vShader, fShader, camera, scene;
+        var loader = new THREE.FileLoader();
+        init();
+
+        function init() {
+
+            renderer = new THREE.WebGLRenderer;
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.getElementById('container').appendChild(renderer.domElement);
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.z = 5000;
+            scene = new THREE.Scene();
+
+            var numFilesLeft = 2;
+
+            function runMoreIfDone() {
+                --numFilesLeft;
+                if (numFilesLeft === 0) {
+                    more();
+                }
+            }
+
+            //******* DO NOT WORK
+            loader.load('shader/SHADER.frag', function(data) {
+                fShader = data;
+                runMoreIfDone();
+            }, );
+            loader.load('shader/DEFAULT.vert', function(data) {
+                vShader = data;
+                runMoreIfDone();
+            }, );
+            // ****** WORK
+            //fShader = document.getElementById('fragmentShader').text;
+            //vShader = document.getElementById('vertexShader').text;
+        }
+
+        function more() {
+
+            // **************************
+            uniforms = {
+                color: {
+                    type: 'vec3',
+                    value: new THREE.Color(0xA0C0EF)
+                }
+            };
+
+            var material = new THREE.ShaderMaterial({
+                uniforms: uniforms,
+                vertexShader: vShader,
+                fragmentShader: fShader,
+            });
+
+            // Create circles and add to scene.
+            var geometry = new THREE.PlaneBufferGeometry(2, 2);
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+            //var light = new THREE.AmbientLight(0x000000); // soft white light
+            //scene.add(light);
+
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+
+    </script>
+</body>
+
+</html>
