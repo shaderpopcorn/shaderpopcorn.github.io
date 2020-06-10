@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <title>shaderpopcorn</title>
+    <title>SHADERPOPCORN - The interactive shader site to play with.</title>
     <meta charset="utf-8">
-    <meta name="description" content="color">
+    <meta name="description" content="On this site you can play with preprogramed shaders.">
     <meta name="author" content="KW">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
@@ -121,7 +121,7 @@
             }
         }
 
-         function onWindowResize(event) {
+        function onWindowResize(event) {
             renderer.setSize(window.innerWidth, window.innerHeight);
             uniforms.resolution.value.x = renderer.domElement.width;
             uniforms.resolution.value.y = renderer.domElement.height;
