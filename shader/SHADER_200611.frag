@@ -9,9 +9,33 @@ uniform float time;
 
         float PI = 3.1415;
 
-        vec2 Rotate2D(vec2 uv, float an){ float s = sin(an), c = cos(an); uv *= mat2(c,-s,s,c); return uv; }
+        vec2 RotateUV(vec2 uv, float an){ float s = sin(an), c = cos(an); uv *= mat2(c,-s,s,c); return uv; }
 
-        vec2 Scale2D(vec2 uv, vec2 zo){ float x = zo.x, y = zo.y; uv *= mat2(-x,y,x,y); return uv; }
+        vec2 Rotate2D(vec2 uv, float an){ uv -= 0.5; float s = sin(an), c = cos(an); uv *= mat2(c,-s,s,c); uv += 0.5; return uv; }
+
+        vec2 ScaleUV(vec2 uv, vec2 zo){ float x = zo.x, y = zo.y; uv *= mat2(-x,y,x,y); return uv; }
+
+        float Box(vec2 st, vec2 sz, float sm){
+            sz = vec2(0.5) - sz * 0.5;
+            vec2 aa = vec2(sm * 0.5);
+            vec2 uv = smoothstep(sz, sz + aa, st);
+            uv *= smoothstep(sz, sz + aa, vec2(1.0) - st);
+            return uv.x*uv.y;
+        }
+
+        float sdBox(vec2 uv, vec2 b){
+            vec2 d = abs(uv)-b;
+            return length(max(d,0.1)) + min(max(d.x,d.y),0.1);
+        }
+
+        vec2 Offset(vec2 st){
+            vec2 uv;
+            if(st.x>0.5) { uv.x = st.x - 0.5; }
+            else { uv.x = st.x + 0.5; }
+            if(st.y>0.5) { uv.y = st.y - 0.5; }
+            else { uv.y = st.y + 0.5; }
+            return uv;
+        }
 
         void main(void){
             vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
@@ -52,21 +76,23 @@ uniform float time;
             vec4 ccy = vec4(mcy);
             ccy *= vec4(.1,.1,.1,mcy*.9);
 
-            uv = Rotate2D(uv, PI/.8);
-            //uv = Scale2D(uv, vec2(1.,.5));
-
             //-------------------------------------------------------------
 
+            //uv = RotateUV(uv, PI/.8);
+            //uv = ScaleUV(uv, vec2(1.,.5));
+
             uv *= 10.;
-            vec2 gv = fract(uv)-.5;
-            vec2 id = floor(uv);
-            float dist = length(uv)/4.;
+            float dist = uv.x/4.;
+            vec2 gv = fract(uv);
+            vec2 cv = fract(uv)-.5;
+            float d = sdBox(cv,vec2(0.2,0.2));
+            float r = mix(.2,.375, sin(dist-time/7.));
+            float m = smoothstep(r*.95,r,d);
+            gv = Rotate2D(gv,PI*.25);
+            vec2 offsetUV = Offset(gv);
 
-            float d = length(gv);
-            float r = mix(.01,mnp.x, sin(dist-time/5.)*.5+.5);
-            float m = smoothstep(r,r*.9,d);
-
-            vec4 ccm = vec4(m);
+            float mx = mnc.x*2.;
+            vec4 ccm = vec4( Box(offsetUV,vec2(1.-fract(sin(mx)*.355-.64)),0.01) +                2.*Box(gv,vec2(fract(sin(mx)*.355-.64)),0.01))*m;
 
             //-------------------------------------------------------------
 
