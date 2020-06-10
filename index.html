@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-    <title>shaderpopcorn</title>
+    <title>shaderpopcorn - interactive fragment shader</title>
     <meta charset="utf-8">
     <meta name="description" content="color">
     <meta name="author" content="KW">
@@ -187,8 +187,8 @@
             }
 
             document.onmousemove = function(e) {
-                uniforms.mouse.value.x = e.pageX * 2;
-                uniforms.mouse.value.y = e.pageY * 2;
+                uniforms.mouse.value.x = e.pageX;
+                uniforms.mouse.value.y = e.pageY;
             }
 
             document.ontouchstart = function(e) {
