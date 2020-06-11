@@ -86,7 +86,7 @@ uniform float time;
             vec2 gv = fract(uv);
             vec2 cv = fract(uv)-.5;
             float d = sdBox(cv,vec2(0.2,0.2));
-            float r = mix(.2,.375, sin(dist-time/7.));
+            float r = mix(.2,.375, sin(dist-time/4.));
             float m = smoothstep(r*.95,r,d);
             gv = Rotate2D(gv,PI*.25);
             vec2 offsetUV = Offset(gv);
