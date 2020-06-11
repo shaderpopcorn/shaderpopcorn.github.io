@@ -30,10 +30,10 @@ uniform float time;
 
         vec2 Offset(vec2 st){
             vec2 uv;
-            if(st.x>0.5) { uv.x = st.x - 0.5; }
-            else { uv.x = st.x + 0.5; }
-            if(st.y>0.5) { uv.y = st.y - 0.5; }
-            else { uv.y = st.y + 0.5; }
+            if(st.x>0.5) uv.x = st.x - 0.5;
+            else uv.x = st.x + 0.5;
+            if(st.y>0.5) uv.y = st.y - 0.5;
+            else uv.y = st.y + 0.5;
             return uv;
         }
 
@@ -92,7 +92,7 @@ uniform float time;
             vec2 offsetUV = Offset(gv);
 
             float mx = mnc.x*2.;
-            vec4 ccm = vec4( Box(offsetUV,vec2(1.-fract(sin(mx)*.355-.64)),0.01) +                2.*Box(gv,vec2(fract(sin(mx)*.355-.64)),0.01))*m;
+            vec4 ccm = vec4( Box(offsetUV,vec2(1.-fract(sin(mx)*.355-.64)),0.01) + 2.*Box(gv,vec2(fract(sin(mx)*.355-.64)),0.01))*m;
 
             //-------------------------------------------------------------
 
