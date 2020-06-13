@@ -74,7 +74,7 @@ uniform float time;
             float dcy = abs(ut.y);
             float mcy = smoothstep(.04,.039,dcy);
             vec4 ccy = vec4(mcy);
-            ccy *= vec4(.1,.1,.1,mcy*.9);
+            ccy *= vec4(.0,.0,.0,mcy*.9);
 
             //-------------------------------------------------------------
 
