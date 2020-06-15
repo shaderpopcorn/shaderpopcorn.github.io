@@ -1,0 +1,123 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    height: 100%;
+}
+
+#container{
+    height: 90%;
+    overflow: auto;
+    -webkit-overflow-scroll: touch;
+}
+
+.contact-button {
+    index: 1000;
+    position: absolute;
+    background-color: red;
+    width: 3%;
+    height: 6%;
+    border: none;
+    left: 45%;
+    top: 93.4%;
+}
+
+.contact-overlay {
+    position: fixed;
+    background-color: rgba(5, 5, 5, 0.7);
+    top: 6.5%;
+    left: 0;
+    width: 100%;
+    height: 87%;
+    opacity: 0;
+    transition: opacity .2s ease-out;
+}
+
+.contact-text {
+    position: relative;
+    text-align: start;
+    vertical-align: top;
+    white-space: pre-line;
+    top: 2%;
+    left: 1%;
+    font-size: 15px;
+    width: 98%;
+    height: 96%;
+    overflow-y: scroll;
+    color: #dca000;
+}
+
+.code-button {
+    index: 1000;
+    position: absolute;
+    background-color: green;
+    width: 3%;
+    height: 6%;
+    border: none;
+    left: 50%;
+    top: 93.4%;
+}
+
+.code-overlay {
+    position: fixed;
+    background-color: rgba(5, 5, 5, 0.7);
+    top: 6.5%;
+    left: 0;
+    width: 100%;
+    height: 87%;
+    opacity: 0;
+    transition: opacity .2s ease-out;
+}
+
+.code-text {
+    position: relative;
+    text-align: start;
+    vertical-align: top;
+    white-space: pre-line;
+    top: 2%;
+    left: 1%;
+    font-size: 15px;
+    width: 98%;
+    height: 96%;
+    overflow-y: scroll;
+    color: #dca000;
+}
+
+.instagram-button {
+    index: 1000;
+    position: absolute;
+    background-color: blue;
+    width: 3%;
+    height: 6%;
+    border: none;
+    left: 55%;
+    top: 93.4%;
+}
+
+.instagram-overlay {
+    position: fixed;
+    background-color: rgba(5, 5, 5, 0.7);
+    top: 6.5%;
+    left: 0;
+    width: 100%;
+    height: 87%;
+    opacity: 0;
+    transition: opacity .2s ease-out;
+}
+
+.instagram-text {
+    position: relative;
+    text-align: start;
+    vertical-align: top;
+    white-space: pre-line;
+    top: 2%;
+    left: 1%;
+    font-size: 15px;
+    width: 98%;
+    height: 96%;
+    overflow-y: scroll;
+    color: #dca000;
+}
