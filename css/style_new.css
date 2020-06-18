@@ -16,13 +16,14 @@ body {
 
 .contact-button {
     index: 1000;
+    opacity: 1;
     position: absolute;
     background-color: red;
-    width: 3%;
-    height: 6%;
+    width: 5%;
+    height: 10%;
     border: none;
-    left: 45%;
-    top: 93.4%;
+    left: 35%;
+    top: 91.1%;
 }
 
 .contact-overlay {
@@ -52,13 +53,14 @@ body {
 
 .code-button {
     index: 1000;
+    opacity: 1;
     position: absolute;
     background-color: green;
-    width: 3%;
-    height: 6%;
+    width: 5%;
+    height: 10%;
     border: none;
-    left: 50%;
-    top: 93.4%;
+    left: 47%;
+    top: 91.1%;
 }
 
 .code-overlay {
@@ -88,13 +90,14 @@ body {
 
 .instagram-button {
     index: 1000;
+    opacity: 1;
     position: absolute;
     background-color: blue;
-    width: 3%;
-    height: 6%;
+    width: 5%;
+    height: 10%;
     border: none;
-    left: 55%;
-    top: 93.4%;
+    left: 59%;
+    top: 91.1%;
 }
 
 .instagram-overlay {
