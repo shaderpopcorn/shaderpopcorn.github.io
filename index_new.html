@@ -16,7 +16,7 @@
         <div id="radiocb" class="footer-button" onclick="cbclick(event)">
             <input type="checkbox" id="contact" class="contact-button"/>
             <input type="checkbox" id="code" class="code-button"/>
-            <input type="checkbox" id="instagram" class="instagram-button"/>
+            <input type="checkbox" onclick="window.location.href='http://instagram.com/shaderpopcorn'"/>
         </div>
 
         <div id="contact-overlay" class="contact-overlay" style="opacity: 0;">
@@ -93,11 +93,6 @@
 
                 </div>
         </div>
-
-        <div id="instagram-overlay" class="instagram-overlay" style="opacity: 0;">
-            <div id="instagram-text" class="instagram-text">INSTAGRAM</div>
-        </div>
-
 
         <script src="lib/three.js"></script>
         <script src="lib/gl-matrix.js"></script>
@@ -221,8 +216,8 @@
                 }
 
                 document.onmousemove = function(e) {
-                    uniforms.mouse.value.x = e.pageX;
-                    uniforms.mouse.value.y = e.pageY;
+                    uniforms.mouse.value.x = e.pageX * 2;
+                    uniforms.mouse.value.y = e.pageY * 2;
                 }
 
                 document.ontouchstart = function(e) {

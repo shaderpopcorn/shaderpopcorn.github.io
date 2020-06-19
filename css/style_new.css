@@ -9,8 +9,8 @@ body {
 }
 
 #container{
-    height: 90%;
-    overflow: auto;
+    height: 100%;
+/*    overflow: auto;*/
     -webkit-overflow-scroll: touch;
 }
 
@@ -42,6 +42,7 @@ input[type=checkbox] {
     left: 0;
     width: 100%;
     height: 87%;
+    line-height: 84vh;
     opacity: 0;
     transition: opacity .2s ease-out;
 }
@@ -49,12 +50,9 @@ input[type=checkbox] {
 .contact-text {
     position: relative;
     text-align: center;
-    vertical-align: top;
-    white-space: pre-line;
+    vertical-align: middle;
     top: 2%;
-    font-size: 3vh;
-    width: 100%;
-    height: 96%;
+    font-size: 4vh;
     color: #dca000;
 }
 
@@ -79,31 +77,8 @@ input[type=checkbox] {
     font-size: 15px;
     width: 98%;
     height: 96%;
+    overflow: hidden;
     overflow-y: scroll;
     color: #dca000;
 }
 
-.instagram-overlay {
-    position: fixed;
-    background-color: rgba(5, 5, 5, 0.7);
-    top: 6.5%;
-    left: 0;
-    width: 100%;
-    height: 87%;
-    opacity: 0;
-    transition: opacity .2s ease-out;
-}
-
-.instagram-text {
-    position: relative;
-    text-align: start;
-    vertical-align: top;
-    white-space: pre-line;
-    top: 2%;
-    left: 1%;
-    font-size: 15px;
-    width: 98%;
-    height: 96%;
-    overflow-y: scroll;
-    color: #dca000;
-}
