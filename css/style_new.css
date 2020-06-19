@@ -14,16 +14,32 @@ body {
     -webkit-overflow-scroll: touch;
 }
 
+.footer-button {
+    index: 1000;
+    opacity: 0;
+    position: absolute;
+    background-color: red;
+    width: 35vh;
+    height: 6vh;
+    border: none;
+    left: 50%;
+    top: 96.5%;
+    transform: translate(-50%, -50%);
+}
+
 .contact-button {
     index: 1000;
     opacity: 1;
-    position: absolute;
     background-color: red;
-    width: 5%;
-    height: 10%;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    height: 90%;
+    width: 150px;
+    left: 22.5%;
+    top: 50%;
     border: none;
-    left: 35%;
-    top: 91.1%;
+    transform: translate(-50%, -50%);
 }
 
 .contact-overlay {
@@ -54,13 +70,16 @@ body {
 .code-button {
     index: 1000;
     opacity: 1;
-    position: absolute;
     background-color: green;
-    width: 5%;
-    height: 10%;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    height: 90%;
+    width: 150px;
+    left: 50%;
+    top: 50%;
     border: none;
-    left: 47%;
-    top: 91.1%;
+    transform: translate(-50%, -50%);
 }
 
 .code-overlay {
@@ -91,13 +110,16 @@ body {
 .instagram-button {
     index: 1000;
     opacity: 1;
-    position: absolute;
     background-color: blue;
-    width: 5%;
-    height: 10%;
+    position: absolute;
+    padding: 0px;
+    margin: 0px;
+    height: 90%;
+    width: 150px;
+    left: 77.5%;
+    top: 50%;
     border: none;
-    left: 59%;
-    top: 91.1%;
+    transform: translate(-50%, -50%);
 }
 
 .instagram-overlay {

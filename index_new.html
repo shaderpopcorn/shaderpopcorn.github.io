@@ -13,10 +13,10 @@
     <body>
         <div id="container"></div>
 
-       <div id="radiocb" onclick="cbclick(event)">
-         <input type="checkbox" id="contact" class="contact-button"/>
-         <input type="checkbox" id="code" class="code-button"/>
-         <input type="checkbox" id="instagram" class="instagram-button"/>
+        <div id="radiocb" class="footer-button" onclick="cbclick(event)">
+            <input type="checkbox" id="contact" class="contact-button"/>
+            <input type="checkbox" id="code" class="code-button"/>
+            <input type="checkbox" id="instagram" class="instagram-button"/>
         </div>
 
         <div id="contact-overlay" class="contact-overlay" style="opacity: 0;">
@@ -174,21 +174,27 @@
 
             function shader() {
 
-                var texLoader = new THREE.TextureLoader();
-                var texSampler = texLoader.load("images/LOGO_ALPHA.png");
-                var texLoader1 = new THREE.TextureLoader();
-                var texSampler1 = texLoader1.load("images/SHADERPOPCORN_1024_ALPHA.png");
-                var texLoader2 = new THREE.TextureLoader();
-                var texSampler2 = texLoader2.load("images/kay_1024_ALPHA.png");
+                var texLoaderLogo = new THREE.TextureLoader();
+                var texSamplerLogo = texLoaderLogo.load("images/LOGO_ALPHA.png");
+                var texLoaderHeader = new THREE.TextureLoader();
+                var texSamplerHeader = texLoaderHeader.load("images/SHADERPOPCORN_1024_ALPHA.png");
+                var texLoaderEmail = new THREE.TextureLoader();
+                var texSamplerEmail = texLoaderEmail.load("images/EMAIL_ALPHA.png");
+                var texLoaderCode = new THREE.TextureLoader();
+                var texSamplerCode = texLoaderCode.load("images/CODE_ALPHA.png");
+                var texLoaderInstagram = new THREE.TextureLoader();
+                var texSamplerInstagram = texLoaderInstagram.load("images/INSTAGRAM_ALPHA.png");
 
                 // **************************
                 uniforms = {
                     time: { type: "f", value: 1.0 },
                     resolution: { type: "v2", value: new THREE.Vector2() },
                     mouse: { type: "v2", value: new THREE.Vector2() },
-                    logo: { type: "t", value: texSampler },
-                    msdfH: { type: "t", value: texSampler1 },
-                    msdfE: { type: "t", value: texSampler2 },
+                    logo:  { type: "t", value: texSamplerLogo },
+                    msdfH: { type: "t", value: texSamplerHeader },
+                    msdfE: { type: "t", value: texSamplerEmail },
+                    msdfC: { type: "t", value: texSamplerCode },
+                    msdfI: { type: "t", value: texSamplerInstagram },
                     click: { type: "f", value: 0.0 },
                     touch: { type: "f", value: 0.0 }
                 };

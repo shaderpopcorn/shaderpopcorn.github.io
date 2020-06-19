@@ -4,6 +4,8 @@ uniform float time;
         uniform sampler2D logo;
         uniform sampler2D msdfH;
         uniform sampler2D msdfE;
+        uniform sampler2D msdfC;
+        uniform sampler2D msdfI;
         uniform float click;
         uniform float touch;
 
@@ -37,6 +39,14 @@ uniform float time;
             return uv;
         }
 
+        vec4 Pulse(vec2 uv, vec4 tex, vec2 offset){
+            float si = sin(length(uv+offset)*5.-time);
+            float co = cos(length(uv+offset)*5.-time);
+            vec4 texA = smoothstep(4., .5, (si+co+si-co))*.5+.5*tex;
+            return texA;
+        }
+
+
         void main(void){
             vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
             vec4 col = vec4(0.);
@@ -55,19 +65,27 @@ uniform float time;
 
             vec2 utL = ut-vec2(mnc.x, clamp(-mnc.y, .0, -.0));
             utL *= mat2(10.,0., 0., 10.);
-            vec4 texL = texture2D(logo,utL+vec2(.5, .5));
-
-            float si = sin(length(utL)*5.-time);
-            float co = cos(length(utL)*5.-time);
-            texL *= smoothstep(4., 1., (si+co+si-co))*.5+.5*texL;
+            vec4 texL = texture2D(logo, utL+vec2(.5,.5));
+            texL *= Pulse(utL, texL, vec2(.0,.0));
 
             vec2 utH = ut*vec2(1.,4.);
             utH *= mat2(4.,0.,0.,4.);
-            vec4 texH = texture2D(msdfH,utH+vec2(.5,-7.));
+            vec4 texH = texture2D(msdfH, utH+vec2(.5,-7.));
 
-            vec2 utE = ut*vec2(1.,8.);
-            utE *= mat2(4.,0.,0.,4.);
-            vec4 texE = texture2D(msdfE,utE+vec2(.5,15.55));
+            vec2 utE = ut*vec2(1.,1.);
+            utE *= mat2(20.,0.,0.,20.);
+            vec4 texE = texture2D(msdfE, utE+vec2(2.425,9.875));
+            texE *= Pulse(utE, texE, vec2(1.9,9.35));
+
+            vec2 utC = ut*vec2(1.,1.);
+            utC *= mat2(20.,0.,0.,20.);
+            vec4 texC = texture2D(msdfC,utC+vec2(.5,9.875));
+            texC *= Pulse(utC, texC, vec2(0,9.35));
+
+            vec2 utI = ut*vec2(1.,1.);
+            utI *= mat2(20.,0.,0.,20.);
+            vec4 texI = texture2D(msdfI,utI+vec2(-1.45, 9.875));
+            texI *= Pulse(utI, texI, vec2(-1.95,9.35));
 
             ut.y = abs(ut.y);
             ut -= vec2(.0,.475);
@@ -99,9 +117,11 @@ uniform float time;
 
             col = mix(ccm,ccy,ccy.a);
 
-            vec4 col1 = mix(col,texL,texL.a);
-            vec4 col2 = mix(col1,texH,texH.a);
-            vec4 col3 = mix(col2,texE,texE.a);
+            vec4 col1 = mix(col, texL, texL.a);
+            vec4 col2 = mix(col1, texH, texH.a);
+            vec4 col3 = mix(col2, texE, texE.a);
+            vec4 col4 = mix(col3, texC, texC.a);
+            vec4 col5 = mix(col4, texI, texI.a);
 
-            gl_FragColor = col3;
+            gl_FragColor = col5;
         }
