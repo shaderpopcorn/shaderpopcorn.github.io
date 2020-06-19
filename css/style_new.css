@@ -16,10 +16,10 @@ body {
 
 .footer-button {
     index: 1000;
-    opacity: 0.5;
+    opacity: 0;
     position: absolute;
     background-color: red;
-    width: 35vh;
+    width: 30vh;
     height: 6vh;
     border: none;
     left: 50%;
@@ -30,12 +30,9 @@ body {
 
 input[type=checkbox] {
 
-    transform: scale(4);
-    margin: 6.25% 11.25% 0;
-}
-
-.contact-button {
-    background-color: red;
+    width: 5.75vh;
+    height: 5.75vh;
+    margin: 0.5% 5.75% ;
 }
 
 .contact-overlay {
@@ -61,10 +58,6 @@ input[type=checkbox] {
     color: #dca000;
 }
 
-.code-button {
-    background-color: green;
-}
-
 .code-overlay {
     position: fixed;
     background-color: rgba(5, 5, 5, 0.7);
@@ -88,10 +81,6 @@ input[type=checkbox] {
     height: 96%;
     overflow-y: scroll;
     color: #dca000;
-}
-
-.instagram-button {
-    background-color: blue;
 }
 
 .instagram-overlay {
