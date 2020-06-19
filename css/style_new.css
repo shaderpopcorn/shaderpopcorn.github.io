@@ -16,7 +16,7 @@ body {
 
 .footer-button {
     index: 1000;
-    opacity: 0;
+    opacity: 0.5;
     position: absolute;
     background-color: red;
     width: 35vh;
@@ -25,21 +25,17 @@ body {
     left: 50%;
     top: 96.5%;
     transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+input[type=checkbox] {
+
+    transform: scale(4);
+    margin: 6.25% 11.25% 0;
 }
 
 .contact-button {
-    index: 1000;
-    opacity: 1;
     background-color: red;
-    position: absolute;
-    padding: 0px;
-    margin: 0px;
-    height: 90%;
-    width: 150px;
-    left: 22.5%;
-    top: 50%;
-    border: none;
-    transform: translate(-50%, -50%);
 }
 
 .contact-overlay {
@@ -55,31 +51,18 @@ body {
 
 .contact-text {
     position: relative;
-    text-align: start;
+    text-align: center;
     vertical-align: top;
     white-space: pre-line;
     top: 2%;
-    left: 1%;
-    font-size: 15px;
-    width: 98%;
+    font-size: 3vh;
+    width: 100%;
     height: 96%;
-    overflow-y: scroll;
     color: #dca000;
 }
 
 .code-button {
-    index: 1000;
-    opacity: 1;
     background-color: green;
-    position: absolute;
-    padding: 0px;
-    margin: 0px;
-    height: 90%;
-    width: 150px;
-    left: 50%;
-    top: 50%;
-    border: none;
-    transform: translate(-50%, -50%);
 }
 
 .code-overlay {
@@ -108,18 +91,7 @@ body {
 }
 
 .instagram-button {
-    index: 1000;
-    opacity: 1;
     background-color: blue;
-    position: absolute;
-    padding: 0px;
-    margin: 0px;
-    height: 90%;
-    width: 150px;
-    left: 77.5%;
-    top: 50%;
-    border: none;
-    transform: translate(-50%, -50%);
 }
 
 .instagram-overlay {
