@@ -14,7 +14,7 @@
     <body>
         <div id="container"></div>
 
-        <div id="radiocb" class="footer-button" onclick="cbclick(event)" style="cursor:pointer">
+        <div id="radiocb" class="footer-button" onclick="cbclick(event)">
             <input type="checkbox" id="contact" class="contact-button" style="cursor:pointer"/>
             <input type="checkbox" id="code" class="code-button" style="cursor:pointer"/>
             <input type="checkbox" style="cursor:pointer" onclick="window.location.href='http://instagram.com/shaderpopcorn'"/>
@@ -236,8 +236,8 @@
                 }
 
                 document.onmousemove = function(e) {
-                    uniforms.mouse.value.x = e.pageX;
-                    uniforms.mouse.value.y = e.pageY;
+                    uniforms.mouse.value.x = e.pageX * 2;
+                    uniforms.mouse.value.y = e.pageY * 2;
                 }
 
                 document.ontouchstart = function(e) {
