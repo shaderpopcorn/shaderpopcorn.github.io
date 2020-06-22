@@ -250,14 +250,6 @@
                 document.ontouchstart = function(e) {
                     e.preventDefault();
                     uniforms.touch.value = 1.0;
-                    var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
-                    if (mac){
-                        uniforms.mouse.value.x = e.pageX * 2;
-                        uniforms.mouse.value.y = e.pageY;
-                    } else {
-                        uniforms.mouse.value.x = e.pageX;
-                        uniforms.mouse.value.y = e.pageY;
-                    }
                 }
 
                 document.ontouchend = function(e) {
