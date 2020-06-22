@@ -12,13 +12,13 @@ uniform float time;
         float PI = 3.1415;
         float PI2 = 6.283;
 
+        //-------------------------------------------------------------
+
         float hexDist(vec2 uv){
             uv = abs(uv);
             float d = dot(uv, normalize(vec2(1.,1.73)));
             d = max(d, uv.x);
             return d;}
-
-        //-------------------------------------------------------------
 
         vec4 Shader(vec2 uv, vec2 mnc){
             vec4 col = vec4(.0);
