@@ -14,7 +14,7 @@
     <body>
         <div id="container"></div>
 
-        <div id="radiocb" class="footer-button" onclick="cbclick(event)" ontouchstart="cbtouch(event)">
+        <div id="radiocb" class="footer-button">
             <input type="checkbox" id="contact" class="contact-button"/>
             <input type="checkbox" id="code" class="code-button"/>
             <input type="checkbox" onclick="window.location.href='http://instagram.com/shaderpopcorn'"/>
@@ -117,6 +117,9 @@
         <script src="lib/three.js"></script>
         <script src="lib/gl-matrix.js"></script>
         <script>
+
+            document.getElementById('radiocb').addEventListener("click", cbclick);
+            document.getElementById('radiocb').addEventListener("touchstart", cbtouch);
 
             function cbclick(e){
                e = e || event;
