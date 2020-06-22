@@ -12,9 +12,121 @@
 
     <body>
         <div id="container"></div>
+
+        <div id="radiocb" class="footer-button" onclick="cbclick(event)">
+            <input type="checkbox" id="contact" class="contact-button"/>
+            <input type="checkbox" id="code" class="code-button"/>
+            <input type="checkbox" onclick="window.location.href='http://instagram.com/shaderpopcorn'"/>
+        </div>
+
+        <div id="contact-overlay" class="contact-overlay" style="opacity: 0;">
+            <div id="contact-text" class="contact-text">kay@shaderpopcorn.com</div>
+        </div>
+
+        <div id="code-overlay" class="code-overlay" style="opacity: 0;">
+            <div id="code-text" class="code-text">
+                    void main(void){
+                    vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
+                    vec4 col = vec4(0.);
+
+                    vec2 ut = uv;
+
+                    vec2 mnc;
+                    vec2 mnp;
+                    if(click == 1. || touch == 1.){
+                        mnc = (mouse.xy-.5*resolution.xy)/resolution.y;
+                        mnp = (mouse.xy-.0*resolution.xy)/resolution.y;
+                    } else {
+                        mnc = smoothstep(fract(time),fract(time)+.2,vec2(.0,.0));
+                        mnp = vec2(.5,.5);
+                    }
+
+                    vec2 utL = ut-vec2(mnc.x, clamp(-mnc.y, .0, -.0));
+                    utL *= mat2(10.,0., 0., 10.);
+                    vec4 texL = texture2D(logo,utL+vec2(.5, .5));
+
+                    float si = sin(length(utL)*5.-time);
+                    float co = cos(length(utL)*5.-time);
+                    texL *= smoothstep(4., 1., (si+co+si-co))*.5+.5*texL;
+
+                    vec2 utH = ut*vec2(1.,4.);
+                    utH *= mat2(4.,0.,0.,4.);
+                    vec4 texH = texture2D(msdfH,utH+vec2(.5,-7.));
+
+                    vec2 utE = ut*vec2(1.,8.);
+                    utE *= mat2(4.,0.,0.,4.);
+                    vec4 texE = texture2D(msdfE,utE+vec2(.5,15.55));
+
+                    ut.y = abs(ut.y);
+                    ut -= vec2(.0,.475);
+                    float dcy = abs(ut.y);
+                    float mcy = smoothstep(.04,.039,dcy);
+                    vec4 ccy = vec4(mcy);
+                    ccy *= vec4(.1,.1,.1,mcy*.9);
+
+                    uv = Rotate2D(uv, PI/.8);
+                    //uv = Scale2D(uv, vec2(1.,.5));
+
+                    //-------------------------------------------------------------
+
+                    uv *= 10.;
+                    vec2 gv = fract(uv)-.5;
+                    vec2 id = floor(uv);
+                    float dist = length(uv)/4.;
+
+                    float d = length(gv);
+                    float r = mix(.01,mnp.x, sin(dist-time/5.)*.5+.5);
+                    float m = smoothstep(r,r*.9,d);
+
+                    vec4 ccm = vec4(m);
+
+                    //-------------------------------------------------------------
+
+                    col = mix(ccm,ccy,ccy.a);
+
+                    vec4 col1 = mix(col,texL,texL.a);
+                    vec4 col2 = mix(col1,texH,texH.a);
+                    vec4 col3 = mix(col2,texE,texE.a);
+
+                    gl_FragColor = col3;
+                }
+
+                </div>
+        </div>
+
         <script src="lib/three.js"></script>
         <script src="lib/gl-matrix.js"></script>
         <script>
+
+            function cbclick(e){
+               e = e || event;
+               var cb = e.srcElement || e.target;
+               if (cb.type !== 'checkbox') {return true;}
+               var cbxs = document.getElementById('radiocb').getElementsByTagName('input'), i=cbxs.length;
+                while(i--) {
+                    if (cbxs[i].type && cbxs[i].type == 'checkbox' && cbxs[i].id !== cb.id) {
+                    cbxs[i].checked = false;
+                    }
+                }
+
+                let overlayContact = document.querySelector(".contact-overlay");
+                if (cbxs[0].checked == true) overlayContact.style.opacity = 1;
+                else overlayContact.style.opacity = 0;
+
+                let overlayCode = document.querySelector(".code-overlay");
+                if (cbxs[1].checked == true) overlayCode.style.opacity = 1;
+                else overlayCode.style.opacity = 0;
+
+                let overlayInstagram = document.querySelector(".instagram-overlay");
+                if (cbxs[2].checked == true) overlayInstagram.style.opacity = 1;
+                else overlayInstagram.style.opacity = 0;
+
+                //     if the click should always result in a checked checkbox
+                //     unconmment this:
+                //     cb.checked = true;
+
+            }
+
             var container;
             var renderer,  camera, scene;
             var vShader, fShader;
@@ -45,7 +157,7 @@
                     }
                 }
 
-                loader.load('shader/SHADER_200611.frag', function(data) {
+                loader.load('shader/SHADER_200620.frag', function(data) {
                     fShader = data;
                     runShaderIfDone();
                 }, );
@@ -57,21 +169,27 @@
 
             function shader() {
 
-                var texLoader = new THREE.TextureLoader();
-                var texSampler = texLoader.load("images/LOGO_ALPHA.png");
-                var texLoader1 = new THREE.TextureLoader();
-                var texSampler1 = texLoader1.load("images/SHADERPOPCORN_1024_ALPHA.png");
-                var texLoader2 = new THREE.TextureLoader();
-                var texSampler2 = texLoader2.load("images/kay_1024_ALPHA.png");
+                var texLoaderLogo = new THREE.TextureLoader();
+                var texSamplerLogo = texLoaderLogo.load("images/LOGO_ALPHA.png");
+                var texLoaderHeader = new THREE.TextureLoader();
+                var texSamplerHeader = texLoaderHeader.load("images/SHADERPOPCORN_1024_ALPHA.png");
+                var texLoaderEmail = new THREE.TextureLoader();
+                var texSamplerEmail = texLoaderEmail.load("images/EMAIL_ALPHA.png");
+                var texLoaderCode = new THREE.TextureLoader();
+                var texSamplerCode = texLoaderCode.load("images/CODE_ALPHA.png");
+                var texLoaderInstagram = new THREE.TextureLoader();
+                var texSamplerInstagram = texLoaderInstagram.load("images/INSTAGRAM_ALPHA.png");
 
                 // **************************
                 uniforms = {
                     time: { type: "f", value: 1.0 },
                     resolution: { type: "v2", value: new THREE.Vector2() },
                     mouse: { type: "v2", value: new THREE.Vector2() },
-                    logo: { type: "t", value: texSampler },
-                    msdfH: { type: "t", value: texSampler1 },
-                    msdfE: { type: "t", value: texSampler2 },
+                    logo:  { type: "t", value: texSamplerLogo },
+                    msdfH: { type: "t", value: texSamplerHeader },
+                    msdfE: { type: "t", value: texSamplerEmail },
+                    msdfC: { type: "t", value: texSamplerCode },
+                    msdfI: { type: "t", value: texSamplerInstagram },
                     click: { type: "f", value: 0.0 },
                     touch: { type: "f", value: 0.0 }
                 };
@@ -98,8 +216,8 @@
                 }
 
                 document.onmousemove = function(e) {
-                    uniforms.mouse.value.x = e.pageX * 2;
-                    uniforms.mouse.value.y = e.pageY * 2;
+                    uniforms.mouse.value.x = e.pageX;
+                    uniforms.mouse.value.y = e.pageY;
                 }
 
                 document.ontouchstart = function(e) {
