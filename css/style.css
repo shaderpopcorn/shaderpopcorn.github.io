@@ -28,10 +28,6 @@ body {
     text-align: center;
 }
 
-label{
-    cursor: pointer;
-}
-
 input[type=checkbox] {
     cursor: pointer;
     width: 5.75vh;
@@ -60,6 +56,12 @@ input[type=checkbox] {
     color: #dca000;
 }
 
+.text{
+    width: 99.5%;
+    height: 95%;
+    visibility: hidden;
+}
+
 .code-overlay {
     position: fixed;
     background-color: rgba(5, 5, 5, 0.7);
@@ -76,7 +78,7 @@ input[type=checkbox] {
     text-align: start;
     vertical-align: top;
     white-space: pre-line;
-    top: 2%;
+    top: 1%;
     left: 1%;
     font-size: 15px;
     width: 98%;
