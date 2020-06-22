@@ -1,14 +1,15 @@
 .included {
+    position: relative;
     text-align: start;
     vertical-align: top;
     white-space: pre-line;
+    top: 1%;
+    left: 1%;
+    font-size: 15px;
+    width: 98%;
+    height: 98%;
     overflow: hidden;
     overflow-y: scroll;
     color: #dca000;
-    font-size: 15px;
-    width: 100%;
-    height: 100%;
-    top: 1%;
-    left: 1%;
     font-family: 'Arial', sans-serif;
 }
