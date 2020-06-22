@@ -157,7 +157,7 @@
                     }
                 }
 
-                loader.load('shader/SHADER_200620.frag', function(data) {
+                loader.load('shader/SHADER_200622.frag', function(data) {
                     fShader = data;
                     runShaderIfDone();
                 }, );
@@ -207,7 +207,7 @@
                 onWindowResize();
                 window.addEventListener('resize', onWindowResize, false);
 
-                 document.onmousedown = function(e) {
+                document.onmousedown = function(e) {
                     uniforms.click.value = 1.0;
                 }
 
