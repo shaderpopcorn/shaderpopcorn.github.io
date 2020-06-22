@@ -121,8 +121,8 @@
             document.getElementById('radiocb').ontouchstart= cbclick(event);
 
             document.getElementById('radiocb')
-                .addEventListener('click', someFunction)
-                .addEventListener('touchstart', someFunction);
+                .addEventListener('click', cbclick(event))
+                .addEventListener('touchstart', cbclick(event));
 
             function cbclick(e){
                e = e || event;
