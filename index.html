@@ -119,10 +119,8 @@
         <script>
 
             document.getElementById('radiocb').addEventListener("click", cbclick);
-            document.addEventListener("touchstart", cbtouch);
-
-            function cbclick(e){
-               e = e || event;
+            document.ontouchstart = function(e){
+                e = e || event;
                var cb = e.srcElement || e.target;
                if (cb.type !== 'checkbox') {return true;}
                var cbxs = document.getElementById('radiocb').getElementsByTagName('input'), i=cbxs.length;
@@ -147,10 +145,9 @@
                 //     if the click should always result in a checked checkbox
                 //     unconmment this:
                 //     cb.checked = true;
-
             }
 
-            function cbtouch(e){
+            function cbclick(e){
                e = e || event;
                var cb = e.srcElement || e.target;
                if (cb.type !== 'checkbox') {return true;}
