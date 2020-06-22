@@ -117,11 +117,12 @@
         <script src="lib/gl-matrix.js"></script>
         <script>
 
-            // First we check if you support touch, otherwise it's click:
-            let touchEvent = 'ontouchstart' in window ? 'touchstart' : 'click';
+            document.getElementById('radiocb').onclick = cbclick(event);
+            document.getElementById('radiocb').ontouchstart= cbclick(event);
 
-            // Then we bind via thát event. This way we only bind one event, instead of the two as below
-            document.getElementById('radiocb').addEventListener(touchEvent, cbclick(event));
+            document.getElementById('radiocb')
+                .addEventListener('click', someFunction)
+                .addEventListener('touchstart', someFunction);
 
             function cbclick(e){
                e = e || event;
