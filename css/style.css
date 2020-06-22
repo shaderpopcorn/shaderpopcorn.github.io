@@ -26,10 +26,11 @@ body {
     top: 96.5%;
     transform: translate(-50%, -50%);
     text-align: center;
+    cursor: pointer;
 }
 
 input[type=checkbox] {
-    cursor:pointer;
+    cursor: pointer;
     width: 5.75vh;
     height: 5.75vh;
     margin: 0.5% 5.75% ;
