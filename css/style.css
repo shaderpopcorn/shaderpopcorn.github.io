@@ -28,25 +28,20 @@ body {
     text-align: center;
 }
 
-/*input[type=checkbox] {
-    cursor: pointer;
+input[type=checkbox] {
+    /*cursor: pointer;
     width: 5.75vh;
     height: 5.75vh;
-    margin: 0.5% 5.75%;
-    visibility: hidden;
-}*/
-
-input[type=checkbox] {
-    cursor: pointer;
-    width: 4.75vh;
-    height: 4.75vh;
-    margin: 0.5% 3.75%;
-    visibility: hidden;
+    margin: 0.5% 5.75%;*/
+/*    visibility: hidden;*/
+    display: none;
 }
 
 label {
-    font-size: 40px;
+    font-size: 5vh;
+    margin: 0.5% 6.75%;
     cursor: pointer;
+    opacity: 1;
 }
 
 .contact{
