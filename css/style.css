@@ -6,6 +6,7 @@ body {
     padding: 0px;
     position: relative;
     height: 100%;
+    -webkit-overflow-scrolling: touch;
 }
 
 #container{
