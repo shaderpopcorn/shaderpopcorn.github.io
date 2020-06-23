@@ -176,7 +176,7 @@
                 }
 
                 document.ontouchstart = function(e) {
-                    e.preventDefault();
+//                    e.preventDefault();
                     uniforms.touch.value = 1.0;
                     var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
                     if (mac){
@@ -189,12 +189,12 @@
                 }
 
                 document.ontouchend = function(e) {
-                    e.preventDefault();
+//                    e.preventDefault();
                     uniforms.touch.value = 0.0;
                 }
 
                 document.ontouchmove = function(e) {
-                    e.preventDefault();
+//                    e.preventDefault();
                     var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
                     if (mac){
                         uniforms.mouse.value.x = e.pageX * 2;
