@@ -5,7 +5,6 @@
         <meta charset="utf-8">
         <meta name="description" content="On this site you can play with preprogramed shaders.">
         <meta name="author" content="KW">
-        <meta name=”apple-mobile-web-app-capable” content=”yes”>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
         <link type="text/css" rel="stylesheet" href="css/style.css">
@@ -22,15 +21,13 @@
 
         <div id="contact-overlay" class="contact-overlay" style="opacity: 0;">
             <div id="contact-text" class="contact-text">
-                kay
-                @shaderpopcorn
-                .com
+                <object class="contact" type="text/html" data="text/CONTACT.html" border="1px"></object>
             </div>
         </div>
 
         <div id="code-overlay" class="code-overlay" style="opacity: 0;">
             <div id="code-text" class="code-text">
-                <object class="text" type="text/html" data="text/CODE_200622.html" border="1px"></object>
+                <object class="code" type="text/html" data="text/CODE.html" border="1px"></object>
             </div>
         </div>
 
@@ -53,17 +50,23 @@
                 }
 
                 let overlayContact = document.querySelector(".contact-overlay");
-                if (cbxs[0].checked == true) overlayContact.style.opacity = 1;
-                else overlayContact.style.opacity = 0;
+                let contact = document.querySelector(".contact");
+                if (cbxs[0].checked == true){
+                    overlayContact.style.opacity = 1;
+                    contact.style.visibility = "visible";
+                } else {
+                    overlayContact.style.opacity = 0;
+                    contact.style.visibility = "hidden";
+                }
 
                 let overlayCode = document.querySelector(".code-overlay");
-                let text = document.querySelector(".text");
+                let code = document.querySelector(".code");
                 if (cbxs[1].checked == true){
                     overlayCode.style.opacity = 1;
-                    text.style.visibility = "visible";
+                    code.style.visibility = "visible";
                 } else {
                     overlayCode.style.opacity = 0;
-                    text.style.visibility = "hidden";
+                    code.style.visibility = "hidden";
                 }
 
                 /*let overlayInstagram = document.querySelector(".instagram-overlay");

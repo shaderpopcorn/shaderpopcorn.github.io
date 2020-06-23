@@ -1,0 +1,16 @@
+.included {
+    position: relative;
+    text-align: start;
+/*    vertical-align: top;*/
+    text-align: center;
+    vertical-align: middle;
+    white-space: pre-line;
+    left: 1%;
+    font-size: 15vh;
+    width: 98%;
+    height: 98%;
+/*    overflow: hidden;*/
+   /* overflow-y: scroll;*/
+    color: #dca000;
+    font-family: 'Arial', sans-serif;
+}

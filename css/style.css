@@ -35,6 +35,12 @@ input[type=checkbox] {
     margin: 0.5% 5.75% ;
 }
 
+.contact{
+    width: 30vh;
+    height: 20vh;
+    visibility: hidden;
+}
+
 .contact-overlay {
     position: fixed;
     background-color: rgba(5, 5, 5, 0.7);
@@ -49,14 +55,14 @@ input[type=checkbox] {
 .contact-text {
     position: relative;
     text-align: center;
-    vertical-align: middle;
     white-space: pre-line;
-    top: 37%;
-    font-size: 5vh;
+/*    top: 33%;*/
+    font-size: 4vh;
     color: #dca000;
+    transform: translate(0%,114%)
 }
 
-.text{
+.code {
     width: 99.5%;
     height: 95%;
     visibility: hidden;
@@ -83,7 +89,7 @@ input[type=checkbox] {
     width: 98%;
     height: 98%;
     overflow: hidden;
-    overflow-y: scroll;
+/*    overflow-y: scroll;*/
     color: #dca000;
 }
 
