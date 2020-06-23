@@ -16,7 +16,7 @@ body {
 
 .footer-button {
     index: 1000;
-    opacity: 0;
+    opacity: 0.5;
     position: absolute;
     background-color: red;
     width: 30vh;
@@ -28,11 +28,25 @@ body {
     text-align: center;
 }
 
-input[type=checkbox] {
+/*input[type=checkbox] {
     cursor: pointer;
     width: 5.75vh;
     height: 5.75vh;
-    margin: 0.5% 5.75% ;
+    margin: 0.5% 5.75%;
+    visibility: hidden;
+}*/
+
+input[type=checkbox] {
+    cursor: pointer;
+    width: 4.75vh;
+    height: 4.75vh;
+    margin: 0.5% 3.75%;
+    visibility: hidden;
+}
+
+label {
+    font-size: 40px;
+    cursor: pointer;
 }
 
 .contact{
@@ -89,7 +103,6 @@ input[type=checkbox] {
     width: 98%;
     height: 98%;
     overflow: hidden;
-/*    overflow-y: scroll;*/
     color: #dca000;
 }
 
