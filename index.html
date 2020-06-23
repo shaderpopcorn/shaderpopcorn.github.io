@@ -42,7 +42,7 @@
                e = e || event;
                var cb = e.srcElement || e.target;
                if (cb.type !== 'checkbox') {return true;}
-               var cbxs = document.getElementById('radiocb').getElementsByTagName('label'), i=cbxs.length;
+               var cbxs = document.getElementById('radiocb').getElementsByTagName('input'), i=cbxs.length;
                 while(i--) {
                     if (cbxs[i].type && cbxs[i].type == 'checkbox' && cbxs[i].id !== cb.id) {
                     cbxs[i].checked = false;
@@ -176,7 +176,7 @@
                 }
 
                 document.ontouchstart = function(e) {
-//                    e.preventDefault();
+                    e.preventDefault();
                     uniforms.touch.value = 1.0;
                     var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
                     if (mac){
@@ -189,12 +189,12 @@
                 }
 
                 document.ontouchend = function(e) {
-//                    e.preventDefault();
+                    e.preventDefault();
                     uniforms.touch.value = 0.0;
                 }
 
                 document.ontouchmove = function(e) {
-//                    e.preventDefault();
+                    e.preventDefault();
                     var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
                     if (mac){
                         uniforms.mouse.value.x = e.pageX * 2;
