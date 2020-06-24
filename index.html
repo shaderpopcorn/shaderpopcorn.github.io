@@ -155,6 +155,7 @@
                 window.addEventListener('resize', onWindowResize, false);
                 window.addEventListener('orientationchange', function() {
                   document.body.style.width = window.innerWidth;
+                  document.getElementById('container').style.width = window.innerWidth;
                 });
 
                 document.onmousedown = function(e) {
