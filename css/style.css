@@ -13,7 +13,7 @@ body {
 #container{
     height: 100%;
 /*    overflow: auto;*/
-
+    -webkit-overflow-scroll: touch;
 }
 
 .footer-button {
@@ -28,7 +28,6 @@ body {
     top: 96.5%;
     transform: translate(-50%, -50%);
     text-align: center;
-    -webkit-overflow-scroll: touch;
 }
 
 input[type=checkbox] {
