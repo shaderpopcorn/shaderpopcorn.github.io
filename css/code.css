@@ -1,4 +1,5 @@
 .included {
+    z-index: 200;
     position: relative;
     text-align: start;
     vertical-align: top;
@@ -8,8 +9,8 @@
     width: 98%;
     height: 98%;
     overflow: hidden;
-    overflow: auto;
-    -webkit-overflow-scrolling: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     color: #dca000;
     font-family: 'Arial', sans-serif;
 }
