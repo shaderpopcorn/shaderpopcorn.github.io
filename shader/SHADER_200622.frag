@@ -111,7 +111,7 @@ uniform float time;
 
             vec2 utL = ut-vec2(mnc.x, clamp(-mnc.y, .0, -.0));
             utL *= mat2(10.,0., 0., 10.);
-            vec4 texL = texture2D(logo, utL+vec2(.5,.5));
+            vec4 texL = texture2D(logo, utL+vec2(.5,.7));
             texL *= Pulse(utL, texL, vec2(.0,.0));
 
             vec2 utH = ut*vec2(1.,4.);
