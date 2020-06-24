@@ -52,7 +52,8 @@ label {
 }
 
 .contact-overlay {
-    position: fixed;
+    position: absolute;
+    z-index: 100;
     background-color: rgba(5, 5, 5, 0.7);
     top: 6.5%;
     left: 0;
@@ -63,9 +64,10 @@ label {
 }
 
 .contact-text {
+    z-index: 200;
     text-align: center;
     margin: 0;
-    position: absolute;
+    position: relative;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -81,8 +83,8 @@ label {
 }
 
 .code-overlay {
-    position: fixed;
-    index: 100;
+    position: absolute;
+    z-index: 100;
     background-color: rgba(5, 5, 5, 0.7);
     top: 6.5%;
     left: 0;
@@ -95,7 +97,7 @@ label {
 
 .code-text {
     position: relative;
-    index: 100;
+    z-index: 200;
     text-align: start;
     vertical-align: top;
     white-space: pre-line;
