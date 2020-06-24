@@ -63,18 +63,15 @@ label {
 }
 
 .contact-text {
-/*    position: relative;*/
     text-align: center;
     margin: 0;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     white-space: pre-line;
-/*    top: 33%;*/
     font-size: 4vh;
     color: #dca000;
-/*    transform: translate(0%,114%)*/
 }
 
 .code {
@@ -106,7 +103,8 @@ label {
     font-size: 15px;
     width: 98%;
     height: 98%;
-    overflow-y: scroll;
+    overflow: auto;
+    -webkit-overflow-scrolling: auto;
     overflow: hidden;
     color: #dca000;
 }
