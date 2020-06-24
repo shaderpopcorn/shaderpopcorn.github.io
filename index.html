@@ -128,7 +128,6 @@
                 var texLoaderInstagram = new THREE.TextureLoader();
                 var texSamplerInstagram = texLoaderInstagram.load("images/INSTAGRAM_256_ALPHA.png");
 
-                // **************************
                 uniforms = {
                     time: { type: "f", value: 1.0 },
                     resolution: { type: "v2", value: new THREE.Vector2() },
@@ -154,6 +153,9 @@
 
                 onWindowResize();
                 window.addEventListener('resize', onWindowResize, false);
+                window.addEventListener('orientationchange', function() {
+                  document.body.style.width = window.innerWidth;
+                });
 
                 document.onmousedown = function(e) {
                     uniforms.click.value = 1.0;

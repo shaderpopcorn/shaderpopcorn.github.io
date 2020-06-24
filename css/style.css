@@ -106,8 +106,8 @@ label {
     font-size: 15px;
     width: 98%;
     height: 98%;
-    overflow: auto;
-    -webkit-overflow-scrolling: auto;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     overflow: hidden;
     color: #dca000;
 }
