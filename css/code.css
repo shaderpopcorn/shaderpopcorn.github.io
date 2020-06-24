@@ -8,7 +8,7 @@
     width: 98%;
     height: 98%;
     overflow: hidden;
-    -webkit-transform: translateZ(0);
+    overflow-y: scroll;
     color: #dca000;
     font-family: 'Arial', sans-serif;
 }

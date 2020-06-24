@@ -13,7 +13,7 @@ body {
 #container{
     height: 100%;
 /*    overflow: auto;*/
-
+    -webkit-overflow-scroll: touch;
 }
 
 .footer-button {
@@ -63,13 +63,18 @@ label {
 }
 
 .contact-text {
-    position: relative;
+/*    position: relative;*/
     text-align: center;
+    margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     white-space: pre-line;
 /*    top: 33%;*/
     font-size: 4vh;
     color: #dca000;
-    transform: translate(0%,114%)
+/*    transform: translate(0%,114%)*/
 }
 
 .code {
@@ -87,7 +92,6 @@ label {
     height: 87%;
     opacity: 0;
     overflow-y: scroll;
-    -webkit-overflow-scroll: touch;
     transition: opacity .2s ease-out;
 }
 
@@ -100,7 +104,7 @@ label {
     font-size: 15px;
     width: 98%;
     height: 98%;
-    -webkit-transform: translateZ(0);
+    overflow-y: scroll;
     overflow: hidden;
     color: #dca000;
 }
