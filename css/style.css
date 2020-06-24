@@ -100,7 +100,7 @@ label {
     font-size: 15px;
     width: 98%;
     height: 98%;
-   -webkit-transform: translateZ(0);
+    -webkit-transform: translateZ(0);
     overflow: hidden;
     color: #dca000;
 }

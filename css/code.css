@@ -8,8 +8,7 @@
     width: 98%;
     height: 98%;
     overflow: hidden;
-    overflow-y: scroll;
-    -webkit-overflow-scroll: touch;
+    -webkit-transform: translateZ(0);
     color: #dca000;
     font-family: 'Arial', sans-serif;
 }
