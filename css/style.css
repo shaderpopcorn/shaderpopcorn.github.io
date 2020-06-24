@@ -10,6 +10,7 @@ body {
     height: 100%;
 }
 
+
 #container{
     height: 100%;
 /*    overflow: auto;*/
@@ -67,7 +68,7 @@ label {
     z-index: 200;
     text-align: center;
     margin: 0;
-    position: relative;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -96,7 +97,7 @@ label {
 }
 
 .code-text {
-    position: relative;
+    position: absolute;
     z-index: 200;
     text-align: start;
     vertical-align: top;
