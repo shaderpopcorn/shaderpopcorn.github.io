@@ -98,6 +98,7 @@ label {
     font-size: 15px;
     width: 98%;
     height: 98%;
+    overflow-y: scroll;
     overflow: hidden;
     color: #dca000;
 }
