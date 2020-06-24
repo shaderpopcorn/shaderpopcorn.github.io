@@ -38,6 +38,10 @@
         <script src="lib/gl-matrix.js"></script>
         <script>
 
+            window.addEventListener('orientationchange', function() {
+                      document.body.style.width = window.innerWidth;
+                });
+
             function cbclick(e){
                e = e || event;
                var cb = e.srcElement || e.target;
@@ -153,7 +157,6 @@
 
                 onWindowResize();
                 window.addEventListener('resize', onWindowResize, false);
-                window.addEventListener('orientationchange', onWindowResize());
 
                 document.onmousedown = function(e) {
                     uniforms.click.value = 1.0;
