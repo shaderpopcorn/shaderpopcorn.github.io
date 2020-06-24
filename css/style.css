@@ -2,17 +2,18 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #ffffff;
     overflow: hidden;
+    top: 0;
+    left: 0;
     margin: 0px;
     padding: 0px;
-    position: relative;
+    position: fixed;
     height: 100%;
-    -webkit-overflow-scrolling: touch;
 }
 
 #container{
     height: 100%;
 /*    overflow: auto;*/
-    -webkit-overflow-scroll: touch;
+
 }
 
 .footer-button {
@@ -27,6 +28,7 @@ body {
     top: 96.5%;
     transform: translate(-50%, -50%);
     text-align: center;
+    -webkit-overflow-scroll: touch;
 }
 
 input[type=checkbox] {
