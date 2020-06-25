@@ -42,6 +42,8 @@
                       document.body.style.width = window.innerWidth;
                 });
 
+            window.addEventListener('resize', onWindowResize, false);
+
             function cbclick(e){
                e = e || event;
                var cb = e.srcElement || e.target;
