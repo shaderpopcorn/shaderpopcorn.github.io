@@ -38,15 +38,24 @@
         <script src="lib/gl-matrix.js"></script>
         <script>
 
-            window.addEventListener('orientationchange', function() {
+            /*window.addEventListener('orientationchange', function() {
+                    document.body.style.width = window.innerWidth;
+                    document.body.style.height = window.innerHeight;
+                });*/
+
+            var isMobile = /android|webos|iphone|ipad|ipod|blackberry|windows phone/i.test(navigator.userAgent.toLowerCase()),
+                orientationSupport = isMobile ? window.hasOwnProperty('orientation') : false,
+                resizeEvent = orientationSupport ? 'orientationchange' : 'resize';
+
+                window.addEventListener(resizeEvent, function(){
                     document.body.style.width = window.innerWidth;
                     document.body.style.height = window.innerHeight;
                 });
 
-            window.addEventListener('resize', function() {
+           /* window.addEventListener('resize', function() {
                     document.body.style.width = window.innerWidth;
                     document.body.style.height = window.innerHeight;
-                });
+                });*/
 
 
             function cbclick(e){
