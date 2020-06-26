@@ -43,9 +43,9 @@
                 });
 
             onMainWindowResize();
-            window.addEventListener('resize', onMainWindowResize, false);
+            window.addEventListener('resize', onWindowResize, false);
             function onMainWindowResize(event) {
-                document.body.style.width = window.innerWidth;
+                document.body.style.height = window.innerHeight;
             }
 
             function cbclick(e){
