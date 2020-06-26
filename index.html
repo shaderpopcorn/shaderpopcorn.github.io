@@ -42,7 +42,11 @@
                       document.body.style.width = window.innerWidth;
                 });
 
-            window.addEventListener('resize', onWindowResize, false);
+            onMainWindowResize();
+            window.addEventListener('resize', onMainWindowResize, false);
+            function onMainWindowResize(event) {
+                document.body.style.width = window.innerWidth;
+            }
 
             function cbclick(e){
                e = e || event;
