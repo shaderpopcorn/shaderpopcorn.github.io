@@ -42,11 +42,7 @@
                       document.body.style.width = window.innerWidth;
                 });
 
-            onMainWindowResize();
             window.addEventListener('resize', onWindowResize, false);
-            function onMainWindowResize(event) {
-                document.body.style.height = window.innerHeight;
-            }
 
             function cbclick(e){
                e = e || event;
