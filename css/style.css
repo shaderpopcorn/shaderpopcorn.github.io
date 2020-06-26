@@ -7,12 +7,12 @@ body {
     margin: 0px;
     padding: 0px;
     position: absolute;
-    height: 100vh;
+    height: 100%;
 }
 
 
 #container{
-    height: 100vh;
+    height: 100%;
     width: auto;
 /*    overflow: auto;*/
     -webkit-overflow-scroll: touch;
