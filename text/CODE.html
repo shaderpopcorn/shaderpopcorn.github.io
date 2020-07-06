@@ -11,80 +11,57 @@
     float PI = 3.1415;
     float PI2 = 6.283;
 
-
     in VertexData{vec4 v_position;vec3 v_normal;vec2 v_texcoord;} inData;
     out vec4 fragColor;
 
-    float hexDist(vec2 uv){
-        uv = abs(uv);
-        float d = dot(uv, normalize(vec2(1.,1.73)));
-        d = max(d, uv.x);
-        return d;}
+    vec2 Rotate2D(vec2 uv, float an){
+        uv -= .5;
+        float si = sin(an), co = cos(an);
+        uv *=  mat2(co,-si,si,co);
+        uv += .5;
+        return uv;}
+
+    float Box(vec2 uv, vec2 sz, float ed){
+        sz = vec2(.5)-sz*.5;
+        vec2 aa = vec2(ed*.5);
+        vec2 m = smoothstep(sz, sz+aa, uv);
+        m *= smoothstep(sz, sz+aa, vec2(1.)-uv);
+        return m.x*m.y;}
+
+    float sdBox(vec2 uv, vec2 sz){
+        vec2 di = abs(uv)-sz;
+        return length(min(max(di.x,di.y),0.1))+length(min(max(di.x,di.y),.1));}
+
+    vec2 Offset(vec2 uv){
+        vec2 ov;
+        if(uv.x>.5) ov.x = uv.x - .5;
+        else ov.x = uv.x + .5;
+
+        if(uv.y>.5) ov.y = uv.y - .5;
+        else ov.y = uv.y + .5;
+        return ov;}
+
+    vec4 Shader(vec2 uv, vec2 mnc){
+        uv *= 10.;
+        vec2 gv = fract(uv);
+        vec2 id = floor(uv);
+        vec2 bv = fract(uv);
+        float dist = id.x/4.;
+
+        gv = Rotate2D(gv,PI*.25);
+        vec2 offsetUV = Offset(gv);
+
+        bv = Rotate2D(bv,PI*.25);
+        float d = sdBox(bv-.5, vec2(sin(dist-time/1.5)/5.5+.17));
+        float m = smoothstep(.01,.02, d);
+
+        float mx = mnc.x*2.7-1.4;
+        vec4 col = vec4(Box(offsetUV,vec2(1.-fract(mx*.355-.5)),.01) + 2.*Box(gv,vec2(fract(mx*.355-.5)),.01))*m;
+        return col;}
 
     void main(void){
-        vec2 uv = (gl_FragCoord.xy -.5*resolution.xy)/resolution.y;
-        vec4 col = vec4(.0);
+        vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
+        vec4 col = Shader(uv, mouse);
+        fragColor = col;}
 
-        uv *= 5.;
-
-        float an = PI/2.;
-        uv *= mat2(cos(an),-sin(an),sin(an),cos(an));
-
-        vec2 r = vec2(1.,1.73);
-        vec2 h = r*.5;
-
-        vec2 gv;
-        vec2 gv1 = mod(uv, r)-h;
-        vec2 gv2 = mod(uv-h, r)-h;
-
-        if(length(gv1) < length(gv2)) gv = gv1;
-        else gv = gv2;
-
-        float x = atan(gv.x,gv.y)/PI2+.5;
-        float y = 0.;
-
-        vec2 gvA = gv;
-        vec2 gvB = gv;
-        vec2 gvC = gv;
-
-        float zo = (mouse.x+.1)*30.;
-
-        if(x>0. && x<1./3.) {
-            gvA += vec2(.25,.14);
-            float anA = PI/3.;
-            gvA *= mat2(cos(anA),-sin(anA),sin(anA),cos(anA));
-            gvA *= zo;
-            gvA.y = abs(gvA.y);
-            gvA.y -= time;
-            float d = sin(gvA.x+gvA.y*1.73);
-            float m = smoothstep(.1,.0,d);
-            col += vec4(m);
-        }
-
-        if(x>1./3. && x<1./3.*2.) {
-            gvB += vec2(.0,-.2925);
-            float aB = PI/1.;
-            gvB *= mat2(cos(aB),-sin(aB),sin(aB),cos(aB));
-            gvB *= zo;
-            gvB.y = abs(gvB.y);
-            gvB.y -= time;
-            float d = sin(gvB.x+gvB.y*1.73);
-            float m = smoothstep(.1,.0,d);
-            col += vec4(m);
-        }
-
-        if(x>1./3.*2. && x<1.) {
-            gvC += vec2(-.25,.14);
-            float aC = 1.-PI/1.53;
-            gvC *= mat2(cos(aC),-sin(aC),sin(aC),cos(aC));
-            gvC *= zo;
-            gvC.y = abs(gvC.y);
-            gvC.y -= time;
-            float d = sin(gvC.x+gvC.y*1.73);
-            float m = smoothstep(.1,.0,d);
-            col += vec4(m);
-        }
-
-        fragColor = col;
-    }
 </div>
