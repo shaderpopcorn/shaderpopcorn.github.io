@@ -9,59 +9,52 @@
     uniform vec2 mouse;
 
     float PI = 3.1415;
-    float PI2 = 6.283;
 
-    in VertexData{vec4 v_position;vec3 v_normal;vec2 v_texcoord;} inData;
+    in VertexData{vec4 v_position; vec3 v_normal; vec2 v_texcoord;} inData;
     out vec4 fragColor;
 
-    vec2 Rotate2D(vec2 uv, float an){
-        uv -= .5;
-        float si = sin(an), co = cos(an);
-        uv *=  mat2(co,-si,si,co);
-        uv += .5;
-        return uv;}
+    float Xor(float a, float b){return a*(1.-b)+b*(1.-a);}
 
-    float Box(vec2 uv, vec2 sz, float ed){
-        sz = vec2(.5)-sz*.5;
-        vec2 aa = vec2(ed*.5);
-        vec2 m = smoothstep(sz, sz+aa, uv);
-        m *= smoothstep(sz, sz+aa, vec2(1.)-uv);
-        return m.x*m.y;}
+    float Sun(vec2 uv, vec2 rv){
+        float gv = uv.x*floor(mouse.x*28.);
+        float m = min(fract(gv),fract(1.-gv));
+        return smoothstep(.299,.3,m) + smoothstep(.05,.0499,rv.y);}
 
-    float sdBox(vec2 uv, vec2 sz){
-        vec2 di = abs(uv)-sz;
-        return length(min(max(di.x,di.y),0.1))+length(min(max(di.x,di.y),.1));}
+    float sdBox(vec2 p, vec2 b){
+        vec2 c = abs(p)-b;
+        float d = length(max(c,.1)) + min(max(c.x,c.y),.1);
+        return smoothstep(.199,.2,d);}
 
-    vec2 Offset(vec2 uv){
-        vec2 ov;
-        if(uv.x>.5) ov.x = uv.x - .5;
-        else ov.x = uv.x + .5;
+    vec4 Shader(vec2 uv, vec2 mouse){
+        vec2 uvA = uv;
+        vec2 uvB = uv;
+        uvA.x -= sin(time/10.)/1.*cos(time/5.)/4.;
+        uvA.y -= sin(time/10.)/2.*sin(time/10.)/3.;
+        uvB.x -= sin(time/10.)/3.*sin(time/15.)/2.;
+        uvB.y -= sin(time/10.)/4.*cos(time/20.)/1.;
 
-        if(uv.y>.5) ov.y = uv.y - .5;
-        else ov.y = uv.y + .5;
-        return ov;}
+        float a = sdBox(uvA, vec2(.4,.1));
+        float b = sdBox(uvB, vec2(.2,.2));
 
-    vec4 Shader(vec2 uv, vec2 mnc){
-        uv *= 10.;
-        vec2 gv = fract(uv);
-        vec2 id = floor(uv);
-        vec2 bv = fract(uv);
-        float dist = id.x/4.;
+        uv -= vec2(mouse.x*2.-1.,sin(mouse.x*3.1415)*.55);
+        uv.y += .575;
+        float an = PI+time/5.;
+        uv *= mat2(cos(an),-sin(an),sin(an),cos(an));
+        vec2 rv = vec2(atan(uv.x,uv.y),length(uv));
+        uv = vec2(rv.x/6.2831+.5,rv.y);
 
-        gv = Rotate2D(gv,PI*.25);
-        vec2 offsetUV = Offset(gv);
+        float s = Sun(uv, rv);
+        float c = Xor(s, a);
+        float d = Xor(b, c);
 
-        bv = Rotate2D(bv,PI*.25);
-        float d = sdBox(bv-.5, vec2(sin(dist-time/1.5)/5.5+.17));
-        float m = smoothstep(.01,.02, d);
-
-        float mx = mnc.x*2.7-1.4;
-        vec4 col = vec4(Box(offsetUV,vec2(1.-fract(mx*.355-.5)),.01) + 2.*Box(gv,vec2(fract(mx*.355-.5)),.01))*m;
-        return col;}
+        return vec4(d);}
 
     void main(void){
         vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
-        vec4 col = Shader(uv, mouse);
+        vec4 col = vec4(0.);
+
+        col = Shader(uv, mouse);
+
         fragColor = col;}
 
 </div>
