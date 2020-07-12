@@ -38,7 +38,7 @@
 
         uv -= vec2(mouse.x*2.-1.,sin(mouse.x*3.1415)*.55);
         uv.y += .575;
-        float an = PI+time/5.;
+        float an = PI+time/10.;
         uv *= mat2(cos(an),-sin(an),sin(an),cos(an));
         vec2 rv = vec2(atan(uv.x,uv.y),length(uv));
         uv = vec2(rv.x/6.2831+.5,rv.y);
