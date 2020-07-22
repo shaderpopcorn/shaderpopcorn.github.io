@@ -54,6 +54,7 @@
             float d = abs(sin(p.x*floor(mnc.x*14.)+p.y*7.));
             float m = smoothstep(.2,.21,d);
             return vec4(m);}
+
         //-------------------------------------------------------------
 
          vec4 Pulse(vec2 uv, vec4 tex, vec2 offset){

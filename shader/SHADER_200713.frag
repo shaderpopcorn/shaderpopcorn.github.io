@@ -51,6 +51,7 @@
             float d = Xor(b, c);
 
             return vec4(d);}
+
         //-------------------------------------------------------------
 
          vec4 Pulse(vec2 uv, vec4 tex, vec2 offset){

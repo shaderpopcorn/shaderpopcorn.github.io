@@ -61,6 +61,7 @@
             float n = m*f;
 
             return vec4(n);}
+
         //-------------------------------------------------------------
 
          vec4 Pulse(vec2 uv, vec4 tex, vec2 offset){
