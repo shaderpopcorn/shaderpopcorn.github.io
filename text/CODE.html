@@ -8,49 +8,57 @@
     uniform vec2 resolution;
     uniform vec2 mouse;
 
-    float PI = 3.1415;
+    float PI2 = 6.283;
 
-    in VertexData{ vec4 v_position; vec3 v_normal; vec2 v_texcoord; } inData;
+    in VertexData {vec4 v_position; vec3 v_normal; vec2 v_texcoord;} inData;
     out vec4 fragColor;
 
-    vec2 Tiling(vec2 p){
-        float id = .0;
-        id += step(1., mod(p.x,2.));
-        id += step(1., mod(p.y,2.))*2.;
+    vec2 Tiling(vec2 p, float t){
+        if (fract(t)>.5){
+            if (fract(p.y*.5)>.5) p.x += fract(t)*2.;
+            else p.x -= fract(t)*2.;}
+        else {
+            if (fract(p.x*.5)>.5) p.y += fract(t)*2.;
+            else p.y -= fract(t)*2.;}
+        return fract(p);}
 
-        p = fract(p)-.5;
-
-        float t = 20.;
-        if (id == 0.){
-            float a = PI*-.25;
-            p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-            p.x = abs(p.x);
-            p -= time/t;}
-        else if (id == 1.){
-            float a = PI*-.75;
-            p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-            p.x = abs(p.x);
-            p -= time/t;}
-            else if (id == 2.){
-            float a = PI*.25;
-            p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-            p.x = abs(p.x);
-            p -= time/t;}
-        else if (id == 3.){
-            float a = PI*.75;
-            p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-            p.x = abs(p.x);
-            p -= time/t;}
-        return p;}
+    float sdStar5(vec2 p, float r, float rf){
+        const vec2 k1 = vec2(0.809016994375, -0.587785252292);
+        const vec2 k2 = vec2(-k1.x,k1.y);
+        p.x = abs(p.x);
+        p -= 2.0*max(dot(k1,p),0.01)*k1;
+        p -= 2.0*max(dot(k2,p),0.01)*k2;
+        p.x = abs(p.x);
+        p.y -= r;
+        vec2 ba = rf*vec2(-k1.y,k1.x) - vec2(0,1);
+        float h = clamp( dot(p,ba)/dot(ba,ba), 0.0, r );
+        return length(p-ba*h) * sign(p.y*ba.x-p.x*ba.y);}
 
     vec4 Shader(vec2 p, vec2 mouse){
-        p *= 5.;
-        float a = PI*.25;
-        p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-        p = Tiling(p);
-        float d = abs(sin(p.x*floor(mouse.x)+p.y*7.));
-        float m = smoothstep(.2,.21,d);
-        return vec4(m);}
+        p -= .5;
+        vec2 cv = (p+time/4.)*PI2*.5;
+
+        p *= 7.;
+        p = Tiling(p,time/8.);
+        vec2 gv = fract(p)-.5;
+
+        float ds = sdStar5(gv,.5,.34);
+        float ms = 1.-smoothstep(.01,.02,ds);
+
+        float dc = sdStar5(gv,.35,.34);
+        float mc = 1.-smoothstep(.02,.01,dc);
+
+        float m = mc*ms;
+
+        float mx = mouse.x+.075;
+
+        float an = -.4;
+        gv *= mat2(cos(an),-sin(an),sin(an),cos(an));
+        float a = atan(gv.y,gv.x)/PI2+.49;
+        float f = smoothstep(mx,mx-.01, a);
+        float n = m*f;
+
+        return vec4(n);}
 
     void main(void){
         vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
