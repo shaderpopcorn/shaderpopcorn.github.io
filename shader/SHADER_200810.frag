@@ -30,7 +30,7 @@
             vec2 i = floor(p);
             vec2 q = fract(p*(R11(2.)*.2));
 
-            vec2 v = vec2(time/4. * max(g.x,g.y));
+            vec2 v = vec2(time/7. * max(g.x,g.y));
             v *= vec2(0.,-.5) * R11(.5+i.x);
 
             vec2 o = vec2(.0,.0);
@@ -45,8 +45,8 @@
 
         vec4 Shader(vec2 p, vec2 mnc){
             mnc = mnc*.5+.35;
-            vec4 c = L(p, .785, vec2(20.,50.),mnc);
-            c += L(p, -.785, vec2(20.,50.),mnc);
+            vec4 c = L(p, .7854, vec2(20.,50.),mnc);
+            c += L(p, -.7854, vec2(20.,50.),mnc);
             return c;}
 
         //-------------------------------------------------------------

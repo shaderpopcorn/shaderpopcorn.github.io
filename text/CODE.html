@@ -8,43 +8,44 @@
     uniform vec2 resolution;
     uniform vec2 mouse;
 
-    float PI = 3.1415;
-
-    in VertexData{vec4 v_position;vec3 v_normal;vec2 v_texcoord;} inData;
+    in VertexData{ vec4 v_position; vec3 v_normal; vec2 v_texcoord; } inData;
     out vec4 fragColor;
 
-    vec2 Rot2D(vec2 p, float a){
-        p -= .5;
-        float s = sin(a), c = cos(a);
-        p = mat2(c,-s,s,c)*p;
-        p += .5;
-        return p;}
+    float R11 (float x) {return fract(sin(x)*1e4);}
 
-    vec2 RotT(vec2 p){
-        p *= 2.;
-        float id = 0.;
-        id += step(1., mod(p.x,2.));
-        id += step(1., mod(p.y,2.))*2.;
+    float R21 (vec2 p) {return fract(sin(dot(p.xy, vec2(12.9898,78.233)))* 43758.5453123);}
 
-        vec2 q = fract(p);
+    float P(vec2 p, vec2 v, float t){
+        vec2 q = floor(p + v);
+        return step(t, R21(100.+q*.000001) + R11(q.x)*.5);}
 
-        float t = time;
-        if (id == 0.) q = Rot2D(q,PI*-2.-t);
-        else if(id == 1.) q = Rot2D(q,PI*.5-t);
-        else if(id == 2.) q = Rot2D(q,PI*-.5-t);
-        else if(id == 3.) q = Rot2D(q,PI-t);
-        return q;}
+    vec4 L(vec2 p, float a, vec2 g, vec2 mnc){
 
-    vec4 Shader(vec2 p, vec2 mouse){
-        float a = PI*.25;
         p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-        p *= 7.;
-        p = RotT(p);
-        p.x += mouse.x*2.-1.;
-        float m = smoothstep(.1,0.,sin(abs(p.x+p.y)*2.5));
-        return vec4(m);}
+        p *= g;
 
-    void main(void){
+        vec2 i = floor(p);
+        vec2 q = fract(p*(R11(2.)*.2));
+
+        vec2 v = vec2(time * max(g.x,g.y));
+        v *= vec2(0.,-.5) * R11(.5+i.x);
+
+        vec2 o = vec2(.0,.0);
+
+        vec4 c = vec4(0.);
+        c.r = P(p+o,v,.5+mnc.x);
+        c.g = P(p,v,.5+mnc.x);
+        c.b = P(p-o,v,.5+mnc.x);
+
+        c *= step(mnc.x,q.x);
+        return c;}
+
+    vec4 Shader(vec2 p, vec2 mnc){
+        vec4 c = L(p, .7854, vec2(20.,50.),mnc);
+        c += L(p, -.7854, vec2(20.,50.),mnc);
+        return c;}
+
+    void main() {
         vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
         vec4 col = vec4(0.);
 
