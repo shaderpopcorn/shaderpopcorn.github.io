@@ -11,45 +11,19 @@
     in VertexData{ vec4 v_position; vec3 v_normal; vec2 v_texcoord; } inData;
     out vec4 fragColor;
 
-    float R11 (float x) {return fract(sin(x)*1e4);}
+    vec4 Shader(vec2 p, vec2 mouse){
+        p -= vec2(.1,0.);
+        p *= mat2(1.05,0.,0.,1.05);
+        vec4 col = vec4(1.);
 
-    float R21 (vec2 p) {return fract(sin(dot(p.xy, vec2(12.9898,78.233)))* 43758.5453123);}
+        float r = (mouse.x*2.+.1)*sin(p.x*15.)*cos(15.*p.y);
+        r = sin(7.*r+time*2.);
+        float d = length(p*.5);
+        col *= smoothstep(r,r+.1,d);
+        return col;}
 
-    float P(vec2 p, vec2 v, float t){
-        vec2 q = floor(p + v);
-        return step(t, R21(100.+q*.000001) + R11(q.x)*.5);}
-
-    vec4 L(vec2 p, float a, vec2 g, vec2 mnc){
-
-        p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-        p *= g;
-
-        vec2 i = floor(p);
-        vec2 q = fract(p*(R11(2.)*.2));
-
-        vec2 v = vec2(time * max(g.x,g.y));
-        v *= vec2(0.,-.5) * R11(.5+i.x);
-
-        vec2 o = vec2(.0,.0);
-
-        vec4 c = vec4(0.);
-        c.r = P(p+o,v,.5+mnc.x);
-        c.g = P(p,v,.5+mnc.x);
-        c.b = P(p-o,v,.5+mnc.x);
-
-        c *= step(mnc.x,q.x);
-        return c;}
-
-    vec4 Shader(vec2 p, vec2 mnc){
-        vec4 c = L(p, .7854, vec2(20.,50.),mnc);
-        c += L(p, -.7854, vec2(20.,50.),mnc);
-        return c;}
-
-    void main() {
+    void main(void){
         vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
-        vec4 col = vec4(0.);
-
-        col = Shader(uv, mouse);
-
+        vec4 col = Shader(uv, mouse);
         fragColor = col;}
 </div>
