@@ -11,27 +11,35 @@
     in VertexData{ vec4 v_position; vec3 v_normal; vec2 v_texcoord; }inData;
     out vec4 fragColor;
 
-    vec4 Wave (vec2 p, float h){
-        float f = pow(.5,abs(sin(p.x*15.))*h+1.);
-        float m = smoothstep(f+.001,f,p.y+sin(time/2.)*.02+.475)-smoothstep(f,f-.001,p.y+.5);
+    vec4 Circle(vec2 p, float r, float w, float s){
+        float d = length(p);
+        float h = w;
+        float e = r*s;
+        float m = smoothstep(r-h-e,r-h,d)-smoothstep(r+h,r+h+e,d);
         return vec4(m);}
 
     vec4 Shader(vec2 p, vec2 mouse){
         vec4 col = vec4(0.);
-        float mx = mouse.x;
-        col += Wave(p+vec2(.0-time/20.,-.4),.04*mx);
-        col += Wave(p+vec2(.0+time/19.,-.3),.06*mx);
-        col += Wave(p+vec2(.0-time/18.,-.2),.08*mx);
-        col += Wave(p+vec2(.0+time/17.,-.1),.10*mx);
-        col += Wave(p+vec2(.0-time/16.,.0),.12*mx);
-        col += Wave(p+vec2(.0+time/15.,.1),.14*mx);
-        col += Wave(p+vec2(.0-time/14.,.2),.16*mx);
-        col += Wave(p+vec2(.0+time/13.,.3),.18*mx);
-        col += Wave(p+vec2(.0-time/12.,.4),.2*mx);
+        float a = 3.1415*.75;
+        p *= mat2(cos(a),-sin(a),sin(a),cos(a));
+        p.x += .5;
+        p *= 5.;
+        vec2 q = fract(p)-.5;
+        q = abs(q);
+        q *= q/max(q.x,q.y);
+
+        float r = sin(time/2.)*.125+.15;
+        float w = mouse.x/7.;
+        float s = .01;
+
+        col += Circle(q*q,r,w,s);
+        q -= .5;
+        col += Circle(q*q,r,w,s);
         return col;}
 
     void main(void){
         vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
-        vec4 col = Shader(uv,mouse);
+        vec4 col = vec4(0.);
+        col += Shader(uv, mouse);
         fragColor = col;}
 </div>
