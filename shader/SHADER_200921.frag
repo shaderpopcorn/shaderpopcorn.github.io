@@ -27,7 +27,7 @@
             vec2 id = floor(p);
 
             float n = hash21(id);
-            float width = mnc.x;
+            float width = mnc.x/2.+.5;
 
             if(n<.5)q.x *= -1.;
             float mx = clamp(width/2.,.02,.48);
