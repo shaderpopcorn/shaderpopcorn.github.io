@@ -27,12 +27,12 @@
             vec2 id = floor(p);
 
             float n = hash21(id);
-            float width = mnc.x/4.-.23;
+            float width = mnc.x;
 
             if(n<.5)q.x *= -1.;
-            float mx = clamp(mouse.x/2.,.02,.48);
+            float mx = clamp(width/2.,.02,.48);
             float d = abs(abs(q.x + q.y)-.5);
-            float mask = smoothstep(mx,mx-.001,abs(d)-width);
+            float mask = smoothstep(mx,mx-.001,abs(d));
             col += mask;
             return col;}
 
