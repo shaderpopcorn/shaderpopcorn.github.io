@@ -8,33 +8,29 @@
     uniform vec2 resolution;
     uniform vec2 mouse;
 
-    in VertexData{ vec4 v_position; vec3 v_normal; vec2 v_texcoord; }inData;
+    in VertexData { vec4 v_position; vec3 v_normal; vec2 v_texcoord; }inData;
     out vec4 fragColor;
 
-    vec4 Circle(vec2 p, float r, float w, float s){
-        float d = length(p);
-        float h = w;
-        float e = r*s;
-        float m = smoothstep(r-h-e,r-h,d)-smoothstep(r+h,r+h+e,d);
-        return vec4(m);}
+    float hash21(vec2 p){
+        p = fract(p*vec2(234.34, 435.345));
+        p += dot(p, p+34.32);
+        return fract(p.x+p.y);}
 
     vec4 Shader(vec2 p, vec2 mouse){
         vec4 col = vec4(0.);
-        float a = 3.1415*.75;
-        p *= mat2(cos(a),-sin(a),sin(a),cos(a));
-        p.x += .5;
         p *= 5.;
+        p.x += time/2.;
         vec2 q = fract(p)-.5;
-        q = abs(q);
-        q *= q/max(q.x,q.y);
+        vec2 id = floor(p);
 
-        float r = sin(time/2.)*.125+.15;
-        float w = mouse.x/7.;
-        float s = .01;
+        float n = hash21(id);
+        float width = mouse.x/40.;
 
-        col += Circle(q*q,r,w,s);
-        q -= .5;
-        col += Circle(q*q,r,w,s);
+        if(n < .5) q.x *= -1.;
+        float mx = clamp(mouse.x/2.,.02,.48);
+        float d = abs(abs(q.x + q.y)-.5);
+        float mask = smoothstep(mx,mx-.001,abs(d)-width);
+        col += mask;
         return col;}
 
     void main(void){
