@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SHADERPOPCORN - The interactive shader site to play with.</title>
+        <meta charset="utf-8">
+        <meta name="description" content="On this site you can play with preprogramed shaders.">
+        <meta name="author" content="KW">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+        <div id="container"></div>
+
+        <div id="radiocb" class="footer-button" onclick="cbclick(event)">
+            <label for="contact" onclick="">@</label>
+            <input type="checkbox" id="contact" class="contact-button"/>
+            <label for="code" onclick="">@</label>
+            <input type="checkbox" id="code" class="code-button"/>
+            <label for="instagram">@</label>
+            <input type="checkbox" id="instagram" onclick="window.open('http://instagram.com/shaderpopcorn', '_blank')"/>
+        </div>
+
+        <div id="contact-overlay" class="contact-overlay" style="opacity: 0;">
+            <div id="contact-text" class="contact-text">
+                <object class="contact" type="text/html" data="text/CONTACT.html" border="1px"></object>
+            </div>
+        </div>
+
+        <div id="code-overlay" class="code-overlay" style="opacity: 0;">
+            <div id="code-text" class="code-text">
+                <object class="code" type="text/html" data="text/CODE.html" border="1px"></object>
+            </div>
+        </div>
+
+        <script src="lib/three.js"></script>
+        <script src="lib/gl-matrix.js"></script>
+        <script>
+
+            /*window.addEventListener('orientationchange', function() {
+                    document.body.style.width = window.innerWidth;
+                    document.body.style.height = window.innerHeight;
+                });*/
+
+            var isMobile = /android|webos|iphone|ipad|ipod|blackberry|windows phone/i.test(navigator.userAgent.toLowerCase()),
+                orientationSupport = isMobile ? window.hasOwnProperty('orientation') : false,
+                resizeEvent = orientationSupport ? 'orientationchange' : 'resize';
+
+                window.addEventListener(resizeEvent, function(){
+                    document.body.style.width = window.innerWidth;
+                    document.body.style.height = window.innerHeight;
+                });
+
+           /* window.addEventListener('resize', function() {
+                    document.body.style.width = window.innerWidth;
+                    document.body.style.height = window.innerHeight;
+                });*/
+
+
+            function cbclick(e){
+               e = e || event;
+               var cb = e.srcElement || e.target;
+               if (cb.type !== 'checkbox') {return true;}
+               var cbxs = document.getElementById('radiocb').getElementsByTagName('input'), i=cbxs.length;
+                while(i--) {
+                    if (cbxs[i].type && cbxs[i].type == 'checkbox' && cbxs[i].id !== cb.id) {
+                    cbxs[i].checked = false;
+                    }
+                }
+
+                let overlayContact = document.querySelector(".contact-overlay");
+                let contact = document.querySelector(".contact");
+                if (cbxs[0].checked == true){
+                    overlayContact.style.opacity = 1;
+                    contact.style.visibility = "visible";
+                } else {
+                    overlayContact.style.opacity = 0;
+                    contact.style.visibility = "hidden";
+                }
+
+                let overlayCode = document.querySelector(".code-overlay");
+                let code = document.querySelector(".code");
+                if (cbxs[1].checked == true){
+                    overlayCode.style.opacity = 1;
+                    code.style.visibility = "visible";
+                } else {
+                    overlayCode.style.opacity = 0;
+                    code.style.visibility = "hidden";
+                }
+
+                //     if the click should always result in a checked checkbox
+                //     unconmment this:
+                //     cb.checked = true;
+
+            }
+
+            var container;
+            var renderer,  camera, scene;
+            var vShader, fShader;
+            var uniforms;
+            var loader = new THREE.FileLoader();
+
+            init();
+            animate();
+
+            function init() {
+
+                container = document.getElementById('container');
+                renderer = new THREE.WebGLRenderer();
+                renderer.setPixelRatio(window.devicePixelRatio);
+                container.appendChild(renderer.domElement);
+
+                camera = new THREE.Camera();
+                camera.position.z = 1;
+
+                scene = new THREE.Scene();
+
+                var numFilesLeft = 2;
+
+                function runShaderIfDone() {
+                    --numFilesLeft;
+                    if (numFilesLeft === 0) {
+                        shader();
+                    }
+                }
+
+                loader.load('shader/SHADER_200830.frag', function(data) {
+                    fShader = data;
+                    runShaderIfDone();
+                }, );
+                loader.load('shader/DEFAULT.vert', function(data) {
+                    vShader = data;
+                    runShaderIfDone();
+                }, );
+            }
+
+            function shader() {
+
+                var texLoaderLogo = new THREE.TextureLoader();
+                var texSamplerLogo = texLoaderLogo.load("images/LOGO_512_ALPHA.png");
+                var texLoaderHeader = new THREE.TextureLoader();
+                var texSamplerHeader = texLoaderHeader.load("images/SHADERPOPCORN_1024_ALPHA.png");
+                var texLoaderEmail = new THREE.TextureLoader();
+                var texSamplerEmail = texLoaderEmail.load("images/EMAIL_256_ALPHA.png");
+                var texLoaderCode = new THREE.TextureLoader();
+                var texSamplerCode = texLoaderCode.load("images/CODE_256_ALPHA.png");
+                var texLoaderInstagram = new THREE.TextureLoader();
+                var texSamplerInstagram = texLoaderInstagram.load("images/INSTAGRAM_256_ALPHA.png");
+
+                uniforms = {
+                    time: { type: "f", value: 1.0 },
+                    resolution: { type: "v2", value: new THREE.Vector2() },
+                    mouse: { type: "v2", value: new THREE.Vector2() },
+                    logo:  { type: "t", value: texSamplerLogo },
+                    msdfH: { type: "t", value: texSamplerHeader },
+                    msdfE: { type: "t", value: texSamplerEmail },
+                    msdfC: { type: "t", value: texSamplerCode },
+                    msdfI: { type: "t", value: texSamplerInstagram },
+                    click: { type: "f", value: 0.0 },
+                    touch: { type: "f", value: 0.0 }
+                };
+
+                var material = new THREE.ShaderMaterial({
+                    uniforms: uniforms,
+                    vertexShader: vShader,
+                    fragmentShader: fShader,
+                });
+
+                var geometry = new THREE.PlaneBufferGeometry(2, 2);
+                var mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+
+                onWindowResize();
+                window.addEventListener('resize', onWindowResize, false);
+
+                document.onmousedown = function(e) {
+                    uniforms.click.value = 1.0;
+                }
+
+                document.onmouseup = function(e) {
+                    uniforms.click.value = 0.0;
+                }
+
+                document.onmousemove = function(e) {
+                    var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+                    if (mac){
+                        uniforms.mouse.value.x = e.pageX * 2;
+                        uniforms.mouse.value.y = e.pageY * 2;
+                    } else {
+                        uniforms.mouse.value.x = e.pageX;
+                        uniforms.mouse.value.y = e.pageY;
+                    }
+
+                }
+
+                document.ontouchstart = function(e) {
+//                    e.preventDefault();
+                    uniforms.touch.value = 1.0;
+                    var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+                    if (mac){
+                        uniforms.mouse.value.x = e.pageX * 2;
+                        uniforms.mouse.value.y = e.pageY * 2;
+                    } else {
+                        uniforms.mouse.value.x = e.pageX;
+                        uniforms.mouse.value.y = e.pageY;
+                    }
+                }
+
+                document.ontouchend = function(e) {
+//                    e.preventDefault();
+                    uniforms.touch.value = 0.0;
+                }
+
+                document.ontouchmove = function(e) {
+//                    e.preventDefault();
+                    var mac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
+                    if (mac){
+                        uniforms.mouse.value.x = e.pageX * 2;
+                        uniforms.mouse.value.y = e.pageY * 2;
+                    } else {
+                        uniforms.mouse.value.x = e.pageX;
+                        uniforms.mouse.value.y = e.pageY;
+                    }
+                }
+            }
+
+            function onWindowResize(event) {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                uniforms.resolution.value.x = renderer.domElement.width;
+                uniforms.resolution.value.y = renderer.domElement.height;
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                render();
+            }
+
+            function render() {
+                uniforms.time.value += 0.05;
+                renderer.render(scene, camera);
+            }
+        </script>
+    </body>
+
+</html>
