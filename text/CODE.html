@@ -8,30 +8,34 @@
     uniform vec2 resolution;
     uniform vec2 mouse;
 
-    in VertexData{ vec4 v_position; vec3 v_normal; vec2 v_texcoord; }inData;
+    in VertexData { vec4 v_position; vec3 v_normal; vec2 v_texcoord; }inData;
     out vec4 fragColor;
 
-    vec4 Wave (vec2 p, float h){
-        float f = pow(.5,abs(sin(p.x*15.))*h+1.);
-        float m = smoothstep(f+.001,f,p.y+sin(time/2.)*.02+.475)-smoothstep(f,f-.001,p.y+.5);
-        return vec4(m);}
+    float hash21(vec2 p){
+            p = fract(p*vec2(234.34, 435.345));
+            p += dot(p, p+34.32);
+            return fract(p.x+p.y);}
 
     vec4 Shader(vec2 p, vec2 mouse){
         vec4 col = vec4(0.);
-        float mx = mouse.x;
-        col += Wave(p+vec2(.0-time/20.,-.4),.04*mx);
-        col += Wave(p+vec2(.0+time/19.,-.3),.06*mx);
-        col += Wave(p+vec2(.0-time/18.,-.2),.08*mx);
-        col += Wave(p+vec2(.0+time/17.,-.1),.10*mx);
-        col += Wave(p+vec2(.0-time/16.,.0),.12*mx);
-        col += Wave(p+vec2(.0+time/15.,.1),.14*mx);
-        col += Wave(p+vec2(.0-time/14.,.2),.16*mx);
-        col += Wave(p+vec2(.0+time/13.,.3),.18*mx);
-        col += Wave(p+vec2(.0-time/12.,.4),.2*mx);
+        p *= 10.;
+        p.x += time/7.;
+        vec2 q = fract(p)-.5;
+        vec2 id = floor(p);
+
+        float n = hash21(id);
+        float width = mouse.x;
+
+        if(n < .5) q.x *= -1.;
+        float mx = clamp(width/2.,.02,.48);
+        float d = abs(abs(q.x + q.y)-.5);
+        float mask = smoothstep(mx,mx-.001,abs(d));
+        col += mask;
         return col;}
 
     void main(void){
         vec2 uv = (gl_FragCoord.xy-.5*resolution.xy)/resolution.y;
-        vec4 col = Shader(uv,mouse);
+        vec4 col = vec4(0.);
+        col += Shader(uv, mouse);
         fragColor = col;}
 </div>
