@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>SHADERPOPCORN - The interactive shader site to play with.</title>
+        <meta name="description" content="On this site you can play with preprogramed shaders.">
+        <meta name="author" content="KW">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+        
+        <script type="text/javascript" src="https://preview.babylonjs.com/babylon.js"></script>
+        <script type="text/javascript" src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+        <script type="text/javascript" src="https://cdn.babylonjs.com/Oimo.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/ammo-node@1.0.0/ammo.min.js"></script>
+        <script type="text/javascript" src="lib/dat.gui.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/randomcolor/0.6.1/randomColor.min.js"></script>
+        <script type="text/javascript" src="lib/randomColor.js"></script>
+
+        <script type="text/javascript" src="js/GameObject.js"></script>
+        <script type="text/javascript" src="js/Game.js"></script>
+        <script type="text/javascript" src="js/Level.js"></script>
+        <script type="text/javascript" src="js/Geometry.js"></script>
+        <script type="text/javascript" src="js/Gui.js"></script>
+
+        
+    </head>
+    <body>
+        <canvas id="gameCanvas"></canvas>  
+
+        <div class="header">
+            <a href="http://www.shaderpopcorn.com"><div class="logo"></div>
+                <img src="./images/SHADERPOPCORN_1024_ALPHA.png" />
+            </a>
+        </div>
+
+        <div id="radiocb" class="footer" onclick="cbclick(event)">
+            <input type="checkbox" id="contact" class="contact-button"/>
+            <label for="contact" onclick=""><img src="./images/EMAIL_256_ALPHA.png" /></label>
+            <input type="checkbox" id="code" class="code-button"/>
+            <label for="code" onclick=""><img src="./images/CODE_256_ALPHA.png" /></label>
+            <input type="checkbox" id="instagram" onclick="window.open('http://instagram.com/shaderpopcorn', '_blank')"/>
+            <label for="instagram"><img src="./images/INSTAGRAM_256_ALPHA.png" /></label>   
+        </div>
+
+        <div id="contact-overlay" class="contact-overlay" style="opacity: 0;">
+            <div id="contact-text" class="contact-text">
+                <object class="contact" type="text/html" data="text/CONTACT.html" border="1px"></object>
+            </div>
+        </div>
+
+        <div id="code-overlay" class="code-overlay" style="opacity: 0;">
+            <div id="code-text" class="code-text">
+                <object class="code" type="text/html" data="text/CODE.html" border="1px"></object>
+            </div>
+        </div>
+
+        <script>
+            function cbclick(e){
+               e = e || event;
+               var cb = e.srcElement || e.target;
+               if (cb.type !== 'checkbox') {return true;}
+               var cbxs = document.getElementById('radiocb').getElementsByTagName('input'), i=cbxs.length;
+                while(i--) {
+                    if (cbxs[i].type && cbxs[i].type == 'checkbox' && cbxs[i].id !== cb.id) {
+                    cbxs[i].checked = false;
+                    }
+                }
+
+                let overlayContact = document.querySelector(".contact-overlay");
+                let contact = document.querySelector(".contact");
+                if (cbxs[0].checked == true){
+                    overlayContact.style.opacity = 1;
+                    contact.style.visibility = "visible";
+                } else {
+                    overlayContact.style.opacity = 0;
+                    contact.style.visibility = "hidden";   
+                }
+
+                let overlayCode = document.querySelector(".code-overlay");
+                let code = document.querySelector(".code");
+                if (cbxs[1].checked == true){
+                    overlayCode.style.opacity = 1;
+                    code.style.visibility = "visible";
+                } else {
+                    overlayCode.style.opacity = 0;
+                    code.style.visibility = "hidden";
+                }
+
+                //     if the click should always result in a checked checkbox
+                //     unconmment this:
+                //     cb.checked = true;
+
+            }
+        </script>
+    </body>
+</html>
+
