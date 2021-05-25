@@ -1,3 +1,18 @@
+/* 
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+            
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+} */
+
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #ffffff;
@@ -7,51 +22,64 @@ body {
     margin: 0px;
     padding: 0px;
     position: absolute;
-    width: auto;
+    width: 100%;
     height: 100%;
 }
 
 
-#container{
+#gameCanvas{
     height: 100%;
     width: auto;
-/*    overflow: auto;*/
-    -webkit-overflow-scroll: touch;
 }
 
-.footer-button {
-    index: 1000;
-    opacity: 0;
-    position: absolute;
-    background-color: red;
-    width: 30vh;
-    height: 6vh;
-    border: none;
-    left: 50%;
-    top: 96.5%;
-    transform: translate(-50%, -50%);
+
+.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 6.0vh;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.9;
     text-align: center;
+    vertical-align: center;
 }
 
-input[type=checkbox] {
-    /*cursor: pointer;
-    width: 5.75vh;
-    height: 5.75vh;
-    margin: 0.5% 5.75%;*/
-    display: none;
+.header img {
+    width: 24vh;
+    height: 6vh;
 }
 
-label {
-    font-size: 5vh;
-    margin: 0.5% 6.25%;
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 6.0vh;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.9;
+    text-align: center;
+    vertical-align: center;
+  }
+
+input[type="checkbox"] {
+    cursor: pointer; 
+	display: none;
+}
+
+label {	
+    margin: 0vh 1vh;
     cursor: pointer;
-    opacity: 0;
+} 
+
+.footer img {
+    width: 5vh;
+    height: 5vh;
 }
 
 .contact{
     width: 30vh;
     height: 20vh;
-    visibility: hidden;
 }
 
 .code {
@@ -61,7 +89,6 @@ label {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    visibility: hidden;
 }
 
 .contact-overlay, .code-overlay {
@@ -72,8 +99,9 @@ label {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
-    height: 86.5%;
+    height: 86.5vh;
     opacity: 0;
+    pointer-events: none;
     transition: opacity .2s ease-out;
 }
 
@@ -106,4 +134,5 @@ label {
     overflow: hidden;
     color: #dca000;
 }
+
 

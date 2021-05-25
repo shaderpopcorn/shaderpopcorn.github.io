@@ -26,8 +26,18 @@ var Game = function (canvasId) {
   /* var animsSpikes = [];
   animsSpikes["idle"] = { from: 0, to: 100, speed: 5, loop: true }; */
 
-  // all models to load
-  var toLoad = [
+  // all meshes to load
+  var toLoadMesh = [
+    {
+      name: "booth",
+      folder: "assets/BABYLON/scenes/",
+      filename: "MainScene.babylon",
+      anims: [],
+    },
+  ];
+
+  // all images to load
+  var toLoadImage = [
     /* {
       name: "key",
       folder: "assets/",
@@ -41,10 +51,32 @@ var Game = function (canvasId) {
       anims: animsSpikes,
     }, */
     {
-      name: "booth",
-      folder: "assets/BABYLON/scenes/",
-      filename: "MainScene.babylon",
-      anims: [],
+      name: "TEST",
+      file: "assets/BAKE/EARCHAIR.jpg"
+    },
+  ];
+
+   // all textures to load
+   var toLoadTexture = [
+    {
+      name: "LOGO",
+      file: "images/LOGO_512_ALPHA.png"
+    },
+    {
+      name: "SHADERPOPCORN",
+      file: "images/SHADERPOPCORN_1024_ALPHA.png"
+    },
+    {
+      name: "EMAIL",
+      file: "images/EMAIL_256_ALPHA.png"
+    },
+    {
+      name: "CODE",
+      file: "images/CODE_256_ALPHA.png"
+    },
+    {
+      name: "INSTAGRAM",
+      file: "images/INSTAGRAM_256_ALPHA.png"
     },
 
   ];
@@ -54,8 +86,9 @@ var Game = function (canvasId) {
   loader.loadingUIBackgroundColor = "#2c2b29";
 
   var _this = this;
+
   // for each object to load
-  toLoad.forEach(function (tl) {
+  toLoadMesh.forEach(function (tl) {
     var task = loader.addMeshTask(tl.name, "", tl.folder, tl.filename);
     task.onSuccess = function (t) {
       // set all mesh invisible
@@ -64,6 +97,26 @@ var Game = function (canvasId) {
       });
       // save it in the asset array
       _this.assets[t.name] = { meshes: t.loadedMeshes, anims: tl.anims };
+    };
+  });
+
+  // for each image to load
+  toLoadImage.forEach(function (tl) {
+    var task = loader.addImageTask(tl.name, tl.file);
+    task.onSuccess = function (t) {
+      //console.log(t.image);
+      // save it in the asset array
+      _this.assets[t.name] = { image: t.image };
+    };
+  });
+
+  // for each texture to load
+  toLoadTexture.forEach(function (tl) {
+    var task = loader.addTextureTask(tl.name, tl.file);
+    task.onSuccess = function (t) {
+      console.log(t.texture);
+      // save it in the asset array
+      _this.assets[t.name] = { texture: t.texture};
     };
   });
 
@@ -88,7 +141,7 @@ Game.prototype._initScene = function (engine) {
   // camera - necessary to see the world
   var camera = new BABYLON.FreeCamera(
     "UniversalCamera",
-    new BABYLON.Vector3(-5, 5.5, 13),
+    new BABYLON.Vector3(-5, 2.0, -10),
     scene
   );
   camera.setTarget(BABYLON.Vector3.Zero());
@@ -161,10 +214,8 @@ Game.prototype._initGame = function () {
   // level creation
   this.level = Level.Infiniti(this.currentLevel, this);
 
-  this.booth = new Booth(this);
-  this.label = new Label(this);
-  this.password = new Password(this);
-  this.robot = new Robot(this);
+  this.booth = new Geometry(this);
+  this.gui = new Gui(this);
 
  /*  var test = this.assets["booth"].meshes[10];
   
