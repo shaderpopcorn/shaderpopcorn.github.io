@@ -269,10 +269,10 @@ Game.prototype._initGame = function () {
 
   Gui(this,this.scene,this.canvas,camera,cameraTC);
 
-  var defaultPipeline = new BABYLON.DefaultRenderingPipeline("default", true, this.scene, this.activeCamera);
+  /* var defaultPipeline = new BABYLON.DefaultRenderingPipeline("default", true, this.scene, this.activeCamera);
   defaultPipeline.bloomEnabled = true;
   defaultPipeline.fxaaEnabled = true;
-  defaultPipeline.bloomWeight = 0.1;
+  defaultPipeline.bloomWeight = 0.01; */
 
   //var postProcess = new BABYLON.BlackAndWhitePostProcess("bandw", 1.0, camera);
 
