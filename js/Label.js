@@ -5,7 +5,7 @@ var Label = function (game) {
   // GUI for info counter
   var anchor = new BABYLON.AbstractMesh("anchor", this.getScene());
     anchor.billboardMode = BABYLON.Mesh.BILLBOARDMODE_ALL;
-    anchor.position = new BABYLON.Vector3(6,3.5,-10);
+    anchor.position = new BABYLON.Vector3(6,2.5,-10);
 
     var manager = new BABYLON.GUI.GUI3DManager(this.getScene());
     var mainButton = new BABYLON.GUI.HolographicButton("See Features");

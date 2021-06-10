@@ -28,12 +28,20 @@ Level = function (game) {
 
 // creates new map from matrix of ints
 Level.Infiniti = function (number, game) {
-  var level = new Level(game);
-  var geometry = null;
-  var gui = null;
+  /* var level = new Level(game); */
+  var booth = null;
+  /* var label = null; */
+  /* var password = null; */
+  /* var robot = null; */
+  /* var mobile = null; */
+  var samples = null;
   if(number == 1){ 
-    geometry = new Geometry(game); 
-    gui = new Gui(game);
+    booth = new Booth(game); 
+    /* label = new Label(game); */
+    /* password = new Password(game); */
+    /* robot = new Robot(game); */
+    /* mobile = new Mobile(game); */
+    samples = new Samples(game);
   }
-  return level;
+  /* return level; */
 };

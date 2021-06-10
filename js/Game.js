@@ -19,6 +19,11 @@ var Game = function (canvasId) {
   // current level
   this.currentLevel = 1;
 
+  // camera switch
+  this.execute = false;
+
+
+
   // key animation
   /* var animsKey = [];
   animsKey["idle"] = { from: 0, to: 80, speed: 1, loop: true }; */
@@ -26,70 +31,174 @@ var Game = function (canvasId) {
   /* var animsSpikes = [];
   animsSpikes["idle"] = { from: 0, to: 100, speed: 5, loop: true }; */
 
-  // all meshes to load
+  // all models to load
   var toLoadMesh = [
     {
       name: "booth",
-      folder: "assets/BABYLON/scenes/",
-      filename: "MainScene.babylon",
+      rootUrl: "assets/BABYLON/scenes/",
+      sceneFilename: "MainScene.babylon",
       anims: [],
     },
   ];
 
-  // all images to load
-  var toLoadImage = [
-    /* {
-      name: "key",
-      folder: "assets/",
-      filename: "key.babylon",
-      anims: animsKey,
-    }, */
-    /* {
-      name: "spikes",
-      folder: "assets/spikes/",
-      filename: "spikes.babylon",
-      anims: animsSpikes,
-    }, */
+  // all textures to load
+  var toLoadTexture = [
     {
-      name: "TEST",
-      file: "assets/BAKE/EARCHAIR.jpg"
-    },
-  ];
-
-   // all textures to load
-   var toLoadTexture = [
-    {
-      name: "LOGO",
-      file: "images/LOGO_512_ALPHA.png"
+      name: "wallsCeilingUFTex",
+      url: "assets/BAKE/WALLS+CEILING-UF.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
     },
     {
-      name: "SHADERPOPCORN",
-      file: "images/SHADERPOPCORN_1024_ALPHA.png"
+      name: "tableSquareTex",
+      url: "assets/BAKE/TABLE-SQUARE.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
     },
     {
-      name: "EMAIL",
-      file: "images/EMAIL_256_ALPHA.png"
+      name: "tableRoundTopTex",
+      url: "assets/BAKE/TABLE-ROUND-TOP.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
     },
     {
-      name: "CODE",
-      file: "images/CODE_256_ALPHA.png"
+      name: "standingLampShadeTex",
+      url: "assets/BAKE/LAMPSHADE.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
     },
     {
-      name: "INSTAGRAM",
-      file: "images/INSTAGRAM_256_ALPHA.png"
+      name: "stageTex",
+      url: "assets/BAKE/STAGE.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
     },
-
+    {
+      name: "stageClothTex",
+      url: "assets/BAKE/STAGE-CLOTH.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "stageClothTex1",
+      url: "assets/BAKE/STAGE-CLOTH_1.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "sofasTex",
+      url: "assets/BAKE/SOFAS.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "picturesTex",
+      url: "assets/BAKE/PICTURES.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "louvrePanelsTex",
+      url: "assets/BAKE/LOUVRE-PANELS.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "ledBackwallTeabarTex",
+      url: "assets/BAKE/LED-BACKWALL-TEABAR.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "ledBackwallJapanTex",
+      url: "assets/BAKE/UV.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "horizonTex",
+      url: "assets/BAKE/PATTERN_1024_TINY.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "hangingLampsShadeTex",
+      url: "assets/BAKE/LAMPSHADE.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "floorUFTex",
+      url: "assets/BAKE/FLOOR-UF.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "earchairTex",
+      url: "assets/BAKE/EARCHAIR.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "chairRestTex",
+      url: "assets/BAKE/CHAIR-REST.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "carpetsTex",
+      url: "assets/BAKE/CARPETS.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "boothWhitesAllTex",
+      url: "assets/BAKE/BOOTH-WHITES-ALL.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "benchesTex",
+      url: "assets/BAKE/BENCHES.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "barStoneTex",
+      url: "assets/BAKE/BAR-STONE.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "barFrameTex",
+      url: "assets/BAKE/BAR-FRAME.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "armchairBodyTex",
+      url: "assets/BAKE/ARMCHAIR-BODY.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "informationTex",
+      url: "assets/BAKE/INFORMATION.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "sampleGeometryTex",
+      url: "assets/BAKE/MR.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "sampleGeometry1Tex",
+      url: "assets/BAKE/STAGE-CLOTH.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "sampleGeometry3Tex",
+      url: "assets/BAKE/STAGE-CLOTH.jpg",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "microflakeNMap",
+      url: "assets/BAKE/FLAKES.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
+    {
+      name: "normalMap",
+      url: "assets/BAKE/GRASSN.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
   ];
 
   // creates a loader
   var loader = new BABYLON.AssetsManager(this.scene);
   loader.loadingUIBackgroundColor = "#2c2b29";
 
-  var _this = this;
 
+  var _this = this;
   // for each object to load
   toLoadMesh.forEach(function (tl) {
-    var task = loader.addMeshTask(tl.name, "", tl.folder, tl.filename);
+    var task = loader.addMeshTask(tl.name, "", tl.rootUrl, tl.sceneFilename);
     task.onSuccess = function (t) {
       // set all mesh invisible
       t.loadedMeshes.forEach(function (mesh) {
@@ -100,25 +209,24 @@ var Game = function (canvasId) {
     };
   });
 
-  // for each image to load
-  toLoadImage.forEach(function (tl) {
-    var task = loader.addImageTask(tl.name, tl.file);
+  // for each texture to load
+  toLoadTexture.forEach(function (tl) {
+    var task = loader.addTextureTask(tl.name, tl.url, tl.samplingMode);
     task.onSuccess = function (t) {
-      //console.log(t.image);
-      // save it in the asset array
-      _this.assets[t.name] = { image: t.image };
+      _this.assets[t.name] = { texture: t.texture };
     };
   });
 
-  // for each texture to load
-  toLoadTexture.forEach(function (tl) {
-    var task = loader.addTextureTask(tl.name, tl.file);
-    task.onSuccess = function (t) {
-      console.log(t.texture);
-      // save it in the asset array
-      _this.assets[t.name] = { texture: t.texture};
-    };
-  });
+  /* name: string, 
+  meshesNames: any, 
+  rootUrl: string, 
+  sceneFilename: string
+
+  name: string, 
+  url: string, 
+  noMipmap?: boolean, 
+  invertY?: boolean, 
+  samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE */
 
   loader.onFinish = function () {
     // init the game
@@ -131,122 +239,58 @@ var Game = function (canvasId) {
   loader.load();
 };
 
+
+
 Game.prototype._initScene = function (engine) {
   // BABYLON scene creation
   var scene = new BABYLON.Scene(engine);
   scene.gravity = new BABYLON.Vector3(0, -0.9, 0);
   scene.collisionsEnabled = true;
-
-
-  // camera - necessary to see the world
-  var camera = new BABYLON.FreeCamera(
-    "UniversalCamera",
-    new BABYLON.Vector3(-5, 2.0, -10),
-    scene
-  );
-  camera.setTarget(BABYLON.Vector3.Zero());
-  camera.keysUp.push(87); //WASD controls
-  camera.keysDown.push(83);
-  camera.keysLeft.push(65);
-  camera.keysRight.push(68);
-
-
-  /* var camera = new BABYLON.GamepadCamera(
-    "GamepadCamera",
-    new BABYLON.Vector3(0, 2, -5),
-    scene
-  ); */
-
-  camera.inertia = 0.2;
-  camera.speed = 2;
-  camera.angularSensibility = 500;
-  camera.fov = 1;
-  camera.checkCollisions = true;
-  camera.applyGravity = true;
-  camera.minZ = 0.1;
-  camera.ellipsoid = new BABYLON.Vector3(0.25, 1.5, 0.25);
-  camera.ellipsoidOffset = new BABYLON.Vector3(0, 1.3, 0);
-  camera.attachControl(engine.getRenderingCanvas(), true);
- 
-  //camera.target = new BABYLON.Vector3(30, 0, 20);
-
-  /* var camera = new BABYLON.ArcRotateCamera(
-    "Camera",
-    -Math.PI / 2,
-    Math.PI / 2.2,
-    20,
-    BABYLON.Vector3.Zero()
-  );
-  camera.rotation = new BABYLON.Vector3(Math.PI / 3.5, -10, 0);
-  camera.attachControl(engine.getRenderingCanvas(), true); */
-
-  // enable physics engine
-  /* scene.enablePhysics(
-    new BABYLON.Vector3(0, -9.81, 0),
-    new BABYLON.OimoJSPlugin()
-  ); */
-
   scene.enablePhysics(new BABYLON.Vector3(0, 0, 0), new BABYLON.AmmoJSPlugin());
 
-  /* var postProcess = new BABYLON.ImageProcessingPostProcess("processing", 1.0, camera);
-  var curve = new BABYLON.ColorCurves();
-  curve.globalHue = 20;
-  curve.globalDensity = 8;
-  curve.globalSaturation = 8;
-
-  curve.highlightsHue = 2;
-  curve.highlightsDensity = 8;
-  curve.highlightsSaturation = -8;
-
-  curve.shadowsHue = 2;
-  curve.shadowsDensity = 80;
-  curve.shadowsSaturation = 40;
-  postProcess.colorCurvesEnabled = true;
-  postProcess.colorCurves = curve; */
-
-  
+  var colorGrading = new BABYLON.ColorGradingTexture("./assets/LUTS/F-8700-STD.3dl", scene);
+	scene.imageProcessingConfiguration.colorGradingEnabled = true;
+  scene.imageProcessingConfiguration.colorGradingTexture = colorGrading;
+  colorGrading.level = 0.2;
 
   return scene;
 };
+
+
 
 Game.prototype._initGame = function () {
 
   // level creation
   this.level = Level.Infiniti(this.currentLevel, this);
 
-  this.booth = new Geometry(this);
-  this.gui = new Gui(this);
+  // camera creation
+  var camera = Camera(this,this.scene,this.canvas).camera;
+  var cameraTC = Camera(this,this.scene,this.canvas).cameraTC;
 
- /*  var test = this.assets["booth"].meshes[10];
-  
-  var testCam = this.scene.activeCamera;
-  
-  testCam.onCollide = function (colMesh) {
-		if (colMesh.uniqueId === test.uniqueId) {
-      this.gui.password();
-      console.log(testCam.name);
-      console.log(test.name);
-		}
-	} */
+  Gui(this,this.scene,this.canvas,camera,cameraTC);
 
-  
+  var defaultPipeline = new BABYLON.DefaultRenderingPipeline("default", true, this.scene, this.activeCamera);
+  defaultPipeline.bloomEnabled = true;
+  defaultPipeline.fxaaEnabled = true;
+  defaultPipeline.bloomWeight = 0.1;
+
+  //var postProcess = new BABYLON.BlackAndWhitePostProcess("bandw", 1.0, camera);
 
   // debug layer
   this.scene.onKeyboardObservable.add((kbInfo) => {
     switch (kbInfo.type) {
-			case BABYLON.KeyboardEventTypes.KEYDOWN:
-				switch (kbInfo.event.key) {
-                    case "y":
-                      this.scene.debugLayer.show();
-                    break
-                    case "Y":
-                      this.scene.debugLayer.hide();
-                    break
-                }
-			break;
-		}
+      case BABYLON.KeyboardEventTypes.KEYDOWN:
+        switch (kbInfo.event.key) {
+          case "y":
+            this.scene.debugLayer.show();
+            break
+          case "Y":
+            this.scene.debugLayer.hide();
+            break
+        }
+        break;
+    }
   });
-
 };
 
 /* Game.prototype.nextLevel = function () {

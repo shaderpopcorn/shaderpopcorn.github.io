@@ -1,7 +1,6 @@
 var GameObject = function (name, game) {
   // call superclass BABYLON.Mesh
   BABYLON.Mesh.call(this, name, game.scene);
-
   this.game = game;
 };
 
