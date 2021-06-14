@@ -549,7 +549,7 @@ var Booth = function (game) {
   );
   var teabarVideoTexture = new BABYLON.VideoTexture(
     "teabarVideoTexture",
-    "./assets/VIDEO/INFINITI.mp4",
+    "./assets/VIDEO/BUNNY.mp4",
     this.getScene()
   );
   teabarVideoTexture.video.muted = true;
@@ -576,7 +576,7 @@ var Booth = function (game) {
   );
   var japanVideoTexture = new BABYLON.VideoTexture(
     "japanVideoTexture",
-    "./assets/VIDEO/INFINITI.mp4",
+    "./assets/VIDEO/BUNNY.mp4",
     this.getScene()
   );
   japanVideoTexture.video.muted = true;
@@ -603,7 +603,7 @@ var Booth = function (game) {
   );
   var buildingVideoTexture = new BABYLON.VideoTexture(
     "buildingVideoTexture",
-    "./assets/VIDEO/INFINITI_1.mp4",
+    "./assets/VIDEO/BUNNY.mp4",
     this.getScene()
   );
   buildingVideoTexture.video.muted = true;
@@ -683,12 +683,31 @@ var Booth = function (game) {
 
     var manager = new BABYLON.GUI.GUI3DManager(this.getScene());
 
-    var buttonBase = BABYLON.MeshBuilder.CreateBox("buttonBase", {height: 1.4, width: 0.25, depth: 0.25}, this.getScene());
+    var mat = new BABYLON.StandardMaterial("mat", this.getScene());
+    var texture = game.assets["jokeTex"].texture;
+    mat.diffuseTexture = texture;
+
+    var columns = 6;  // 6 columns
+    var rows = 1;  // 4 rows
+
+    var faceUV = new Array(6);
+
+    //set all values to zero
+    for (var i = 0; i < 6; i++) {
+      faceUV[i] = new BABYLON.Vector4(i / columns, 0, (i + 1) / columns, 1 / rows);
+        //faceUV[i] = new BABYLON.Vector4(0, 0, 0, 0);
+    }
+
+    //overwrite wanted face with sprite coordinates
+    //faceUV[1] = new BABYLON.Vector4(3 / columns, 0, (3 + 1) / columns, 1 / rows);
+
+
+    var buttonBase = BABYLON.MeshBuilder.CreateBox("buttonBase", {height: 1.4, width: 0.25, depth: 0.25, faceUV: faceUV}, this.getScene());
     var buttonBaseMaterial = new BABYLON.PBRMaterial("buttonBaseMaterial", this.getScene());
     buttonBaseMaterial.albedoColor = new BABYLON.Color3.Black();
     buttonBaseMaterial.metallic = 0.5;
     buttonBaseMaterial.roughness = 0.5;
-    buttonBase.material = buttonBaseMaterial;
+    buttonBase.material = mat;
 
     buttonBase.position.x = 3.125;
     buttonBase.position.y = 0.7;
@@ -700,11 +719,10 @@ var Booth = function (game) {
     button.linkToTransformNode(anchor);
     anchor.parent = buttonBase;
     //anchor.position.x = 3.25;
-    anchor.position.y = 0.55;
+    anchor.position.y = 0.0;
     anchor.position.z = -0.15;
     
-
-    button.scaling = new BABYLON.Vector3(0.175, 0.175, 0.5);
+    button.scaling = new BABYLON.Vector3(0.175, 1.5, 0.5);
 
     button.onPointerDownObservable.add(function(){
       getAPI(_scene, ledBackwallJapan);
@@ -1199,8 +1217,7 @@ var Booth = function (game) {
   planeMaterial.albedoColor = new BABYLON.Color3.FromHexString("#020202");
   basePlane.material = planeMaterial;
 
-
-
+  // OTHER BOOTHS
   var otherBooth = new BABYLON.MeshBuilder.CreateBox("booth", {height: 8, width: 25, depth: 30}, this.getScene());
   otherBooth.position.x = -31.75;
   otherBooth.position.y = 4;
@@ -1229,10 +1246,36 @@ var Booth = function (game) {
   otherBooth4.position.x = -31.75;
   otherBooth4.position.z = -32.525;
 
-
   // ROBOT
   var robotBody = Robot(game, this.getScene()).robotBody;
   var robotHead = Robot(game, this.getScene()).robotHead;
+
+  // COLLIDERS
+  var teabarCollider = new BABYLON.MeshBuilder.CreateBox("teabarCollider", {height: 7, width: 5.5, depth: 1.5}, this.getScene());
+  teabarCollider.position.x = -7;
+  teabarCollider.position.y = 3.5;
+  teabarCollider.position.z = -2.2;
+  teabarCollider.rotation.y = Math.PI/1.265;
+  teabarCollider.isVisible = false;
+  teabarCollider.checkCollisions = true;
+
+  var japanCollider = teabarCollider.createInstance("japanCollider");
+  japanCollider.position.x = 4.9;
+  japanCollider.position.y = 3.5;
+  japanCollider.position.z = 3;
+  japanCollider.rotation.y = Math.PI/-1.08;
+  japanCollider.isVisible = false;
+  japanCollider.checkCollisions = true;
+
+  var carCollider = teabarCollider.createInstance("carCollider");
+  carCollider.position.x = 0.1;
+  carCollider.position.y = 0;
+  carCollider.position.z = -0.5;
+  carCollider.rotation.y = Math.PI/2.4;
+  carCollider.scaling.z = 1.5;
+  carCollider.isVisible = false;
+  carCollider.checkCollisions = true;
+
 
   /* var mirrorStageMaterial = new BABYLON.StandardMaterial(
     "mirror",

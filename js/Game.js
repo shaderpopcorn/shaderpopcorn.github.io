@@ -188,6 +188,11 @@ var Game = function (canvasId) {
       url: "assets/BAKE/GRASSN.png",
       samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
     },
+    {
+      name: "jokeTex",
+      url: "assets/BAKE/JOKE.png",
+      samplingMode: number = BABYLON.Texture.TRILINEAR_SAMPLINGMODE,
+    },
   ];
 
   // creates a loader
@@ -265,16 +270,13 @@ Game.prototype._initGame = function () {
 
   // camera creation
   var camera = Camera(this,this.scene,this.canvas).camera;
+  var cameraGui = Camera(this,this.scene,this.canvas).cameraGui;
   var cameraTC = Camera(this,this.scene,this.canvas).cameraTC;
 
-  Gui(this,this.scene,this.canvas,camera,cameraTC);
+  scene.activeCameras = [camera, cameraGui];
 
-  /* var defaultPipeline = new BABYLON.DefaultRenderingPipeline("default", true, this.scene, this.activeCamera);
-  defaultPipeline.bloomEnabled = true;
-  defaultPipeline.fxaaEnabled = true;
-  defaultPipeline.bloomWeight = 0.01; */
-
-  //var postProcess = new BABYLON.BlackAndWhitePostProcess("bandw", 1.0, camera);
+  PasswordVIP(this,this.scene,this.canvas,camera,cameraTC);
+  PasswordPage(this,this.scene,this.canvas,camera,cameraGui);
 
   // debug layer
   this.scene.onKeyboardObservable.add((kbInfo) => {

@@ -26,7 +26,7 @@ var isMobile = {
     //alert('PC');
     camera = new BABYLON.FreeCamera(
       "UC",
-      new BABYLON.Vector3(-5, 1.5, -13),
+      new BABYLON.Vector3(0, 1.5, -14),
       this.scene
     );
     camera.keysUp.push(87); //WASD controls
@@ -43,9 +43,34 @@ var isMobile = {
   camera.checkCollisions = true;
   camera.applyGravity = true;
   camera.minZ = 0.1;
-  camera.ellipsoid = new BABYLON.Vector3(0.25, 1.75, 0.25);
+  camera.ellipsoid = new BABYLON.Vector3(0.25, 1.5, 0.25);
   camera.ellipsoidOffset = new BABYLON.Vector3(0, 1.3, 0);
   camera.attachControl(this.canvas, true);
+
+
+
+  var cameraGui = new BABYLON.FreeCamera(
+    "UC",
+    new BABYLON.Vector3(0, 1.5, -14),
+    this.scene
+  );
+  cameraGui.keysUp.push(87); //WASD controls
+  cameraGui.keysDown.push(83);
+  cameraGui.keysLeft.push(65);
+  cameraGui.keysRight.push(68);
+
+  cameraGui.setTarget(BABYLON.Vector3.Zero());
+  cameraGui.inertia = 0.2;
+  cameraGui.speed = 1;
+  cameraGui.angularSensibility = 500;
+  cameraGui.fov = 1;
+  cameraGui.checkCollisions = true;
+  cameraGui.applyGravity = true;
+  cameraGui.minZ = 0.1;
+  cameraGui.ellipsoid = new BABYLON.Vector3(0.25, 1.5, 0.25);
+  cameraGui.ellipsoidOffset = new BABYLON.Vector3(0, 1.3, 0);
+  cameraGui.attachControl(this.canvas, true);
+  cameraGui.layerMask = 0x10000000;
 
 
 
@@ -69,5 +94,5 @@ var isMobile = {
 
 
   
-  return {camera, cameraTC};
+  return {camera, cameraGui, cameraTC};
 }
