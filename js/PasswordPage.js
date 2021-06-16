@@ -28,6 +28,7 @@ PasswordPage = function(game,scene,canvas,camera,cameraGui){
         advancedTexture.dispose();
         postProcess0.dispose();
         postProcess1.dispose();
+        cameraGui.dispose();
       }
       /* let key = kbInfo.currentKey;
       if (key < "0" || key > "9") {

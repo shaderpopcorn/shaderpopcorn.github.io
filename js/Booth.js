@@ -704,7 +704,7 @@ var Booth = function (game) {
     buttonBaseMaterial.albedoColor = new BABYLON.Color3.Black();
     buttonBaseMaterial.metallic = 0.5;
     buttonBaseMaterial.roughness = 0.5;
-    buttonBase.material = mat;
+    buttonBase.material = buttonBaseMaterial;
 
     buttonBase.position.x = 3.125;
     buttonBase.position.y = 0.7;
@@ -716,10 +716,10 @@ var Booth = function (game) {
     button.linkToTransformNode(anchor);
     anchor.parent = buttonBase;
     //anchor.position.x = 3.25;
-    anchor.position.y = 0.0;
+    anchor.position.y = 0.5;
     anchor.position.z = -0.15;
     
-    button.scaling = new BABYLON.Vector3(0.175, 1.5, 0.5);
+    button.scaling = new BABYLON.Vector3(0.175, 0.175, 0.5);
 
     button.onPointerDownObservable.add(function(){
       getAPI(_scene, ledBackwallJapan);
