@@ -142,7 +142,7 @@ var Booth = function (game) {
 
   var wallsCeilingUF = game.assets["booth"].meshes[2];
   wallsCeilingUF.isVisible = true;
-  wallsCeilingUF.checkCollisions = true;
+  wallsCeilingUF.checkCollisions = false;
   var wallsCeilingUFMaterial = new BABYLON.PBRMaterial(
     "wallsCeilingUFMaterial",
     this.getScene()
@@ -1198,6 +1198,37 @@ var Booth = function (game) {
   var noncolliderBoothGlass = game.assets["booth"].meshes[48];
   noncolliderBoothGlass.isVisible = true;
   noncolliderBoothGlass.material = glassMaterial;
+
+
+  var noncolliderCeilingUF = game.assets["booth"].meshes[51];
+  noncolliderCeilingUF.isVisible = true;
+  noncolliderCeilingUF.checkCollisions = false;
+  var noncolliderCeilingUFMaterial = new BABYLON.PBRMaterial(
+    "noncolliderCeilingUFMaterial",
+    this.getScene()
+  );
+  noncolliderCeilingUFMaterial.albedoTexture =
+    game.assets["wallsCeilingUFTex"].texture;
+  noncolliderCeilingUFMaterial.metallic = 0;
+  noncolliderCeilingUFMaterial.roughness = 1;
+  noncolliderCeilingUF.material = noncolliderCeilingUFMaterial;
+  sl4.includedOnlyMeshes.push(noncolliderCeilingUF);
+
+
+  var noncolliderCeiling = game.assets["booth"].meshes[52];
+  noncolliderCeiling.isVisible = true;
+  var noncolliderCeilingMaterial = new BABYLON.PBRMaterial(
+    "noncolliderCeilingMaterial",
+    this.getScene()
+  );
+  noncolliderCeilingMaterial.albedoTexture =
+    game.assets["boothWhitesAllTex"].texture;
+  noncolliderCeilingMaterial.metallic = 0;
+  noncolliderCeilingMaterial.roughness = 1;
+  noncolliderCeiling.material = noncolliderCeilingMaterial;
+  dl2.excludedMeshes.push(noncolliderCeiling);
+  sl5.includedOnlyMeshes.push(noncolliderCeiling);
+
 
   // BIG PLANE
   var basePlane = new BABYLON.MeshBuilder.CreatePlane(

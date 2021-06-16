@@ -43,8 +43,8 @@ var isMobile = {
   camera.checkCollisions = true;
   camera.applyGravity = true;
   camera.minZ = 0.1;
-  camera.ellipsoid = new BABYLON.Vector3(0.25, 1.5, 0.25);
-  camera.ellipsoidOffset = new BABYLON.Vector3(0, 1.3, 0);
+  camera.ellipsoid = new BABYLON.Vector3(0.25, 2.5, 0.25);
+  camera.ellipsoidOffset = new BABYLON.Vector3(0, 3.3, 0);
   camera.attachControl(this.canvas, true);
 
 
