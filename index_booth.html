@@ -54,31 +54,10 @@
       // vUv -= 0.5;
       float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
       vec3 col = vec3(0.0);
-      // light source
-      float t = (sin(time) + 1.0) * 2.0;
-
-      // sun
-      vec2 pos = vec2(vUv.x - 0.75, vUv.y - 0.75);
-      float d = length(pos);
-      float m = 0.025 / d;
-      // float m = smoothstep(0.0, 0.01,d - 0.2);
-      col += m;
-
-      // star
-      pos.x += 0.2;
-      d = length(pos);
-      m = 0.0025 / d;
-      col += m;
-      // rays
-      // pos *= Rot(3.1415 * 4.0);
-      float rays = max(0.0, 0.005 - abs(pos.x * pos.y * 100.0));
-      col += rays;
-      // 45 degree rays
-      // ROT in radians
-      pos *= Rot(3.1415 / 4.0);
-      rays = max(0.0, 0.005 - abs(pos.x * pos.y * 100.0));
-      col += rays; //  * 0.3; 
-
+      
+      float d = length(uv);
+      float m = smoothstep(0.1,0.2,d);
+      col = vec3(m);
 
       gl_FragColor = vec4(col, 1.0);
   }
@@ -103,7 +82,7 @@
           width="3" 
           depth="3" 
           height="0.1" 
-          position="0 0 -2">
+          position="0 0 0">
     </a-box>
     <a-marker-camera preset='hiro'></a-marker-camera>
   </a-scene>
