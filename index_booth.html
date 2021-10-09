@@ -23,114 +23,67 @@
   <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
 </head>
 <body>
- <script>
+  <script>
   /* global AFRAME, THREE */
 
-// shader-grid-glitch.js
+  AFRAME.registerShader('star-test', {
+  schema: {
+    timeMsec: {type: 'time', is: 'uniform'}
+  },
 
-    AFRAME.registerShader('grid-glitch', {
-    schema: {
-      color: {type: 'color', is: 'uniform'},
-      timeMsec: {type: 'time', is: 'uniform'}
-    },
-
-    vertexShader: `
+  vertexShader: `
     varying vec2 vUv;
 
     void main() {
-    vUv = uv;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
     }
-    `,
-
-    fragmentShader: `
+  `,
+  fragmentShader: `
     varying vec2 vUv;
-    uniform vec3 color;
     uniform float timeMsec; // A-Frame time in milliseconds.
 
-    void main() {
-    float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
-    // Use sin(time), which curves between 0 and 1 over time,
-    // to determine the mix of two colors:
-    //    (a) Dynamic color where 'R' and 'B' channels come
-    //        from a modulus of the UV coordinates.
-    //    (b) Base color.
-    // 
-    // The color itself is a vec4 containing RGBA values 0-1.
-    gl_FragColor = mix(
-      vec4(mod(vUv , 0.05) * 20.0, 1.0, 1.0),
-      vec4(color, 1.0),
-      sin(time)
-    );
+    mat2 Rot(float a) {
+      float s = sin(a);
+      float c = cos(a);
+      return mat2(c, -s, s, c);
     }
-    `
-    });
-    </script>
- 
-   <script>
-  /* global AFRAME, THREE */
 
-// shader-grid-glitch.js
+    void main() {
+      vec2 uv = vUv;
+      // vUv -= 0.5;
+      float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
+      vec3 col = vec3(0.0);
+      // light source
+      float t = (sin(time) + 1.0) * 2.0;
 
-AFRAME.registerShader('star-test', {
-schema: {
-  timeMsec: {type: 'time', is: 'uniform'}
-},
+      // sun
+      vec2 pos = vec2(vUv.x - 0.75, vUv.y - 0.75);
+      float d = length(pos);
+      float m = 0.025 / d;
+      // float m = smoothstep(0.0, 0.01,d - 0.2);
+      col += m;
 
-vertexShader: `
-varying vec2 vUv;
-
-void main() {
-vUv = uv;
-gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-}
-`,
-fragmentShader: `
-varying vec2 vUv;
-uniform float timeMsec; // A-Frame time in milliseconds.
-
-mat2 Rot(float a)
-{
-float s = sin(a);
-float c = cos(a);
-return mat2(c, -s, s, c);
-}
-
-void main() {
-vec2 uv = vUv;
-// vUv -= 0.5;
-float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
-vec3 col = vec3(0.0);
-// light source
-float t = (sin(time) + 1.0) * 2.0;
-
-// sun
-vec2 pos = vec2(vUv.x - 0.75, vUv.y - 0.75);
-float d = length(pos);
-float m = 0.025 / d;
-// float m = smoothstep(0.0, 0.01,d - 0.2);
-col += m;
-
-// star
-pos.x += 0.2;
-d = length(pos);
-m = 0.0025 / d;
-col += m;
-// rays
-// pos *= Rot(3.1415 * 4.0);
-float rays = max(0.0, 0.005 - abs(pos.x * pos.y * 100.0));
-col += rays;
-// 45 degree rays
-// ROT in radians
-pos *= Rot(3.1415 / 4.0);
-rays = max(0.0, 0.005 - abs(pos.x * pos.y * 100.0));
-col += rays; //  * 0.3; 
+      // star
+      pos.x += 0.2;
+      d = length(pos);
+      m = 0.0025 / d;
+      col += m;
+      // rays
+      // pos *= Rot(3.1415 * 4.0);
+      float rays = max(0.0, 0.005 - abs(pos.x * pos.y * 100.0));
+      col += rays;
+      // 45 degree rays
+      // ROT in radians
+      pos *= Rot(3.1415 / 4.0);
+      rays = max(0.0, 0.005 - abs(pos.x * pos.y * 100.0));
+      col += rays; //  * 0.3; 
 
 
-gl_FragColor = vec4(col, 1.0);
-}
-`
-});
+      gl_FragColor = vec4(col, 1.0);
+  }
+  `
+  });
 
  </script>
  
@@ -146,7 +99,7 @@ gl_FragColor = vec4(col, 1.0);
               position="2 1.5 -2">
     </a-sphere> -->
     <a-box  
-      material="shader:grid-glitch; color: blue;" 
+      material="shader:star-test;" 
           width="3" 
           depth="3" 
           height="0.1" 
