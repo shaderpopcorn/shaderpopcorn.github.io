@@ -79,15 +79,16 @@
  
  <a-scene embedded arjs>
 
-    
     <a-marker type="pattern" preset="custom" url="https://github.com/shaderpopcorn/shaderpopcorn.github.io/blob/master/pattern-LOGO_ALPHA_720.patt">
-      <a-plane 
+      <a-entity>
+        <a-plane 
         material="shader:star-test;"  
           position="0 0 0" 
           rotation="-90 0 0" 
           width="2" 
           height="2">
       </a-plane>
+      </a-entity>
     </a-marker>
     <a-entity camera></a-entity>
     <!-- <a-marker-camera preset='hiro'></a-marker-camera> -->
