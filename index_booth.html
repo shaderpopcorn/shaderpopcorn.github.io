@@ -43,25 +43,50 @@
     varying vec2 vUv;
     uniform float timeMsec; // A-Frame time in milliseconds.
 
-    mat2 Rot(float a) {
-      float s = sin(a);
-      float c = cos(a);
-      return mat2(c, -s, s, c);
-    }
+    mat2 Rot(vec2 p, float a){
+    return mat2(cos(a),-sin(a),sin(a),cos(a));}
+
+    vec4 sdFrame(vec2 p, vec2 b){
+        vec2 d1 = abs(p)-b;
+        float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
+        float m = smoothstep(.0075,.01,d2)-smoothstep(.0175,.02,d2);
+        return vec4(m);}
+
+    vec4 sdBorder(vec2 p, vec2 b){
+        vec2 d1 = abs(p)-b;
+        float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
+        float m = smoothstep(.005,.006,d2)-smoothstep(.01,.011,d2);
+        return vec4(m);}
+
+    vec4 sdBox(vec2 p, vec2 b) {
+        vec2 d1 = abs(p)-b;
+        float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
+        float m = smoothstep(.0,.001,d2);
+        return vec4(m);}
 
     void main() {
-      vec2 uv = vUv - 0.5;
-      // vUv -= 0.5;
-      float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
-      vec3 col = vec3(0.0);
-      
-      float d = length(uv);
-      float m = smoothstep(0.2,0.1,d);
-      col = vec3(m);  
-
-      gl_FragColor = vec4(col, 0.0);
-  }
-  `
+        vec2 uv = vUv - 0.5;
+        float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
+        vec4 col = vec4(0.0);
+        
+        float t = time*1.5;
+        vec2 uv1 = uv;
+        uv1 += vec2(-.15,.15)*sin(t/3.)*cos(t/2.5);
+        uv1 *= Rot(uv, -t/2.);
+        
+        vec2 uv2 = uv;
+        uv2 += vec2(.15,-.15)*sin(t/3.5)*cos(t/4.);
+        uv2 *= Rot(uv, t/4.);
+        
+        col += sdBorder(uv, vec2(.475,.475));
+        
+        col += sdFrame(uv1, vec2(.2,.2));
+        col += sdFrame(uv2, vec2(.2,.2));
+        col += (1.-sdBox(uv1, vec2(.2,.2)))*(1.-sdBox(uv2, vec2(.2,.2)));
+        // col = 1.-col;
+        
+        gl_FragColor = col;
+    }`
   });
 
  </script>
