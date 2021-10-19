@@ -93,13 +93,20 @@
  
  <a-scene embedded arjs>
 
-    <a-box  
+    <a-plane 
+      material="shader:star-test;"  
+        position="0 0 0" 
+        rotation="-90 0 0" 
+        width="1" 
+        height="1">
+    </a-plane>
+    <!-- <a-box  
       material="shader:star-test;" 
-          width="1" 
-          depth="1" 
-          height="0.1" 
-          position="0 0 0">
-    </a-box>
+        width="1" 
+        depth="1" 
+        height="0.1" 
+        position="0 0 0">
+    </a-box> -->
     <a-marker-camera preset='hiro'></a-marker-camera>
   </a-scene>
     
