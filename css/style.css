@@ -11,7 +11,6 @@ body {
     height: 100%;
 }
 
-
 #container{
     height: 100%;
     width: auto;
@@ -21,12 +20,13 @@ body {
 
 .button {
     z-index: 1000;
+    position: absolute;
     background-color: #2b2b2b00;
     border: none;
     color: rgb(253, 183, 32);
     position: absolute;
-    left: 97%;
-    top: 1%;
+    left: 95%;
+    top: 5%;
     text-align: center;
     text-decoration: none;
     font-size: 20px;
