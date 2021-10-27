@@ -78,7 +78,7 @@
 
  </script>
  
- <a-scene embedded arjs>
+ <!-- <a-scene embedded arjs>
   <a-plane 
     material="shader:star-test;"  
       position="0 0 0" 
@@ -87,18 +87,18 @@
       height="2">
   </a-plane>
   <a-marker-camera preset='kanji'></a-marker-camera>
-</a-scene>
+</a-scene> -->
 
- <!-- <a-scene embedded arjs=’sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960;’>
-        <a-plane 
-        material="shader:star-test;"  
-          position="0 0 0" 
-          rotation="-90 0 0" 
-          width="2" 
-          height="2">
-      </a-plane>
-      <a-marker type='pattern' url='./pattern-R.patt'></a-marker>
-  </a-scene> -->
+ <a-scene embedded arjs>
+    <a-plane 
+      material="shader:star-test;"  
+      position="0 0 0" 
+      rotation="-90 0 0" 
+      width="2" 
+      height="2">
+    </a-plane>
+    <a-marker type='pattern' url='./pattern/pattern-R-GREY.patt'></a-marker>
+  </a-scene>
 
 </body>
 
