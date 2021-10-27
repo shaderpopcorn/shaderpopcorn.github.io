@@ -21,88 +21,88 @@
 </head>
 <body>
   <script>
-  /* global AFRAME, THREE */
+    /* global AFRAME, THREE */
 
-  AFRAME.registerShader('star-test', {
-  schema: {
-    timeMsec: {type: 'time', is: 'uniform'}
-  },
+    AFRAME.registerShader('star-test', {
+    schema: {
+      timeMsec: {type: 'time', is: 'uniform'}
+    },
 
-  vertexShader: `
-    varying vec2 vUv;
+    vertexShader: `
+      varying vec2 vUv;
 
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-    }
-  `,
-  fragmentShader: `
-    varying vec2 vUv;
-    uniform float timeMsec; // A-Frame time in milliseconds.
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+      }
+    `,
+    fragmentShader: `
+      varying vec2 vUv;
+      uniform float timeMsec; // A-Frame time in milliseconds.
 
-    mat2 Rot(vec2 p, float a){
-    return mat2(cos(a),-sin(a),sin(a),cos(a));}
+      mat2 Rot(vec2 p, float a){
+      return mat2(cos(a),-sin(a),sin(a),cos(a));}
 
-    vec3 sdFrame(vec2 p, vec2 b){
-        vec2 d1 = abs(p)-b;
-        float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
-        float m = smoothstep(.0075,.01,d2)-smoothstep(.0175,.02,d2);
-        return vec3(m);}
+      vec3 sdFrame(vec2 p, vec2 b){
+          vec2 d1 = abs(p)-b;
+          float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
+          float m = smoothstep(.0075,.01,d2)-smoothstep(.0175,.02,d2);
+          return vec3(m);}
 
-    vec3 sdBorder(vec2 p, vec2 b){
-        vec2 d1 = abs(p)-b;
-        float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
-        float m = smoothstep(.005,.006,d2)-smoothstep(.01,.011,d2);
-        return vec3(m);}
+      vec3 sdBorder(vec2 p, vec2 b){
+          vec2 d1 = abs(p)-b;
+          float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
+          float m = smoothstep(.005,.006,d2)-smoothstep(.01,.011,d2);
+          return vec3(m);}
 
-    vec3 sdBox(vec2 p, vec2 b) {
-        vec2 d1 = abs(p)-b;
-        float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
-        float m = smoothstep(.0,.001,d2);
-        return vec3(m);}
+      vec3 sdBox(vec2 p, vec2 b) {
+          vec2 d1 = abs(p)-b;
+          float d2 = length(max(d1,.02)) + min(max(d1.x,d1.y),.0);
+          float m = smoothstep(.0,.001,d2);
+          return vec3(m);}
 
-    void main() {
-        vec2 uv = vUv - 0.5;
-        float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
-        vec3 col = vec3(0.0,0.0,0.0);
-        
-        float t = time*1.5;
-        vec2 uv1 = uv;
-        uv1 += vec2(-.15,.15)*sin(t/3.)*cos(t/2.5);
-        uv1 *= Rot(uv, -t/2.);
-        
-        vec2 uv2 = uv;
-        uv2 += vec2(.15,-.15)*sin(t/3.5)*cos(t/4.);
-        uv2 *= Rot(uv, t/4.);
-        
-        col += sdBorder(uv, vec2(.475,.475));
-        
-        col += sdFrame(uv1, vec2(.2,.2));
-        col += sdFrame(uv2, vec2(.2,.2));
-        col += (1.-sdBox(uv1, vec2(.2,.2)))*(1.-sdBox(uv2, vec2(.2,.2)));
-        // col = 1.-col;
-        
-        gl_FragColor = vec4(col,0.0);
-    }`
-  });
+      void main() {
+          vec2 uv = vUv - 0.5;
+          float time = timeMsec / 1000.0; // Convert from A-Frame milliseconds to typical time in seconds.
+          vec3 col = vec3(0.0,0.0,0.0);
+          
+          float t = time*1.5;
+          vec2 uv1 = uv;
+          uv1 += vec2(-.15,.15)*sin(t/3.)*cos(t/2.5);
+          uv1 *= Rot(uv, -t/2.);
+          
+          vec2 uv2 = uv;
+          uv2 += vec2(.15,-.15)*sin(t/3.5)*cos(t/4.);
+          uv2 *= Rot(uv, t/4.);
+          
+          col += sdBorder(uv, vec2(.475,.475));
+          
+          col += sdFrame(uv1, vec2(.2,.2));
+          col += sdFrame(uv2, vec2(.2,.2));
+          col += (1.-sdBox(uv1, vec2(.2,.2)))*(1.-sdBox(uv2, vec2(.2,.2)));
+          // col = 1.-col;
+          
+          gl_FragColor = vec4(col,0.0);
+      }`
+    });
 
- </script>
+  </script>
  
- <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
+    <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
 
-  <a-marker-camera type='barcode' value='7'>
-    <a-box position='0 0.5 0' color="yellow"></a-box>
-  </a-marker-camera>
-  <!-- <a-plane 
-    material="shader:star-test;"  
-      position="0 0 0" 
-      rotation="-90 0 0" 
-      width="2" 
-      height="2">
-  </a-plane>
-  <a-marker-camera preset='hiro'></a-marker-camera> -->
-  <!-- <a-entity camera></a-entity> -->
-</a-scene>
+      <a-marker-camera type='barcode' value='7'>
+        <a-box position='0 0.5 0' color="yellow"></a-box>
+      </a-marker-camera>
+      <!-- <a-plane 
+        material="shader:star-test;"  
+          position="0 0 0" 
+          rotation="-90 0 0" 
+          width="2" 
+          height="2">
+      </a-plane>
+      <a-marker-camera preset='hiro'></a-marker-camera> -->
+      <!-- <a-entity camera></a-entity> -->
+    </a-scene>
 
    <!-- we add detectionMode and matrixCodeType to tell AR.js to recognize barcode markers -->
     <!-- <a-scene embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;'>
